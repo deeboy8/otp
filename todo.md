@@ -1,16 +1,30 @@
 # lesson summaries
 
 ## 10/28
-- take a look at Kanbn and to do tree
-- make a makefile
-    - potentially use repl's makefile
-        - tell it to show hidden file (hides makefile)
-- review munit docs
-    - download .c and .h file and upload to repo
-    - step through munit example code to refresh memory
-- design all three commands for commandline 
-    - refer back to notes from Wyzant notes
-    
+
+- let's organize around three *projects*:
+  1. **job/career**
+     - LinkedIn
+       - [ ] review other’s LI style to determine what’s next
+     - resume
+       - [ ] resume *v.Next*
+  2. **LI projects**
+     - [ ] review, build, *etc.*
+  3. **`otp`**:
+     - Still organizing – **gitpod**, **kanbn**, **todo tree**, **live share**…
+       - [ ] take a look at Kanbn and to do tree
+         - [ ] [Kanbn Extension for Visual Studio Code - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=gordonlarrigan.vscode-kanbn)
+         - [ ] [Todo Tree - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)
+     - [ ] make a makefile
+       - create your own as the `replit.com` version won't work w/multiple `main()`-s - `otp` and `munit`
+       - ~~potentially use repl's makefile~~
+         - ~~tell it to show hidden file (hides makefile)~~
+     - [ ] review [µnit](https://nemequ.github.io/munit/) docs
+       - [ ] download `.c` and `.h` file and upload to `otp` repo
+       - [ ] step through `munit` example code to refresh memory
+     - [ ] design all three commands for commandline
+       - refer back to notes from Wyzant notes (add to repo)
+
 ## 10/20
 
 - feeling better about job vs. career
