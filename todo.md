@@ -1,5 +1,16 @@
 # lesson summaries
 
+## 10/28
+- take a look at Kanbn and to do tree
+- make a makefile
+    - potentially use repl's makefile
+        - tell it to show hidden file (hides makefile)
+- review munit docs
+    - download .c and .h file and upload to repo
+    - step through munit example code to refresh memory
+- design all three commands for commandline 
+    - refer back to notes from Wyzant notes
+    
 ## 10/20
 
 - feeling better about job vs. career
@@ -12,7 +23,7 @@
 ### next
 
 - [ ] complete dev. env. setup
-- github/replit/gitpod
+  - github/replit/gitpod
 - VS Code, consider these extensions (they don't work in any of the browser envs.):
   - [Kanbn Extension for Visual Studio Code - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=gordonlarrigan.vscode-kanbn)
 - [ ] review other’s LI style to determine what’s next
