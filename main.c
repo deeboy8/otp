@@ -2,6 +2,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+// otp -e key.key
+
+// -k (keygen) keyLength 
+// -e (encode) key.key < plaintext.txt > cipher.txt
+// -d (decode) key.key < ciphertext.txt > new_plaintext.txt
+
+// diff plaintext.txt new_plaintxt.txt 
+
 int main(int argc, char* argv[]) {
     int opt;
 
