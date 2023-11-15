@@ -1,5 +1,19 @@
 # lesson summaries
 
+## 11/04
+- discussion on the state of the world... 🎼... Be happy❗😎
+- *projects:*
+  1. **job/career**
+     - LinkedIn
+       - [ ] review other’s LI style to determine what’s next
+     - resume
+       - [ ] resume *v.Next*
+  2. **LI projects**
+     - [ ] review, build, *etc.*
+  3. **`otp`**:
+    - [ ] command line args, std files and named files – convention for *standard* handles is `-`
+    - [ ] spec out/implement CLA/getopt(0 loop for otp…
+
 ## 10/28
 
 - let's organize around three *projects*:
