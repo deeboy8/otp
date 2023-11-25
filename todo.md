@@ -10,9 +10,9 @@
        - [ ] resume *v.Next*
   2. **LI projects**
      - [ ] review, build, *etc.*
-  3. **`otp`**:
-    - [ ] command line args, std files and named files – convention for *standard* handles is `-`
-    - [ ] spec out/implement CLA/getopt(0 loop for otp…
+  3. **otp**
+      - [ ] command line args, std files and named files – convention for *standard* handles is `-`
+      - [ ] spec out/implement CLA/getopt(0 loop for otp…
 
 ## 10/28
 
