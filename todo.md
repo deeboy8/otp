@@ -1,5 +1,25 @@
 # lesson summaries
 
+## 11/25
+- caught-up on life, and realized that we both have a lot to be thankful for...
+- complimentary discussions on:
+  - new, exciting work opportunities
+  - objectives (personal/pofessional) and *projects*
+- yielded:
+  - **backburnered** *projects:*  
+    ~~1. **job/career**~~  
+      ~~- LinkedIn~~  
+        ~~- [ ] review other’s LI style to determine what’s next~~  
+      ~~- resume~~  
+        ~~- [ ] resume *v.Next*~~  
+    ~~2. **LI projects**~~  
+      ~~- [ ] review, build, *etc.*~~  
+  - **focussed** *projects:*  
+    - **otp**
+        1. [ ] user interface:  
+          - design and implement (`getopt()` loop) command line args, input/output files (named and standard), *etc.*  
+        2. [ ] review (preferably in debugger) µnit's `example.c`
+
 ## 11/04
 - discussion on the state of the world... 🎼... Be happy❗😎
 - *projects:*
