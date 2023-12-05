@@ -2,37 +2,33 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-// otp -e key.key
-
-// -k (keygen) keyLength 
-// -e (encode) key.key < plaintext.txt > cipher.txt
-// -d (decode) key.key < ciphertext.txt > new_plaintext.txt
-
-// diff plaintext.txt new_plaintxt.txt 
-
 int main(int argc, char* argv[]) {
     int opt;
+    FILE* fd;
+    int char_count;
 
-    while ((opt = getopt(argc, argv, "a:")) != -1) { //16 - 38 is setting up state
+    while ((opt = getopt(argc, argv, "a:mv")) != -1) { //16 - 38 is setting up state
         switch (opt) {
             case 'a':
                 printf("yup, got a\n");
                 // where the argument for a is held
                 char* app_name = optarg;
                 // validate that app_name is valid --> key, encode, decode
+                if (optarg == "key") {
+                    char_count = atoi(argv[3]) 
+                } 
+                else if (app_name == "encode" || app_name == "decode") {
+                    fd = argv[4]
+                }
                 break;
-            // case 'k':
-            //     printf("yup, got k\n");
-                
-            //     break;
-            // case 'e':
-            //     printf("yup, got e\n");
-            //     break;
-            // case 'd':
-            //     printf("yup, got d\n");
-            //     break;
+            case 'm':
+                printf("yup, got m\n");
+                break;
+            case 'v':
+                printf("yup, got v\n");
+                break;
             default:
-                fprintf(stderr, "Usage: %s\n", argv[0]);
+                fprintf(stderr, "Usage: %s requires the use of of a keyword: key, encode or decode\n", argv[0]);
                 exit(EXIT_FAILURE);
         }
     }
