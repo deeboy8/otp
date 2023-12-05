@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
                 break;
             case 'm':
                 printf("total characters: , got m\n");
-                break;
+                break; 
             case 'v':
                 printf("yup, got v\n");
                 break;
