@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
                 app_name = optarg;
                 break;
             case 'm':
-                printf("yup, got m\n");
+                printf("total characters: , got m\n");
                 break;
             case 'v':
                 printf("yup, got v\n");
@@ -31,14 +31,18 @@ int main(int argc, char* argv[]) {
     //test if app name = key --> go do all the key stuff
     //if app name == encode or decode, then better have access to key file
         // where do we get teh keyfile name (look at getopt)
-    // validate that app_name is valid --> key, encode, decode
     if (optarg == "key") {
         char_count = atoi(argv[3]);
         //generate_key_file(char_count)--> we need plaintext char count? how come up with char_count? 
     } 
-    else if (app_name == "encode" || app_name == "decode") {
-        fd = argv[4];
-        
+    else if (app_name == "encode") {
+        fd = argv[4]; //key.key
+        //encode_message()
+    }
+    
+    else if (app_name == "decode") {
+        fd = argv[4]; //key.key
+        //decode_message()
     }
     exit(EXIT_SUCCESS);
 }
