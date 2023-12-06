@@ -1,6 +1,30 @@
 # lesson summaries
 
+## 12/06
+
+- discussed different ways of looking at life and how we feel both/either at different points in time😎
+![Pushing Boulder Uphill](https://miro.medium.com/max/880/1*dKf6Q2WJ1RGZlPjvUbPNFw.gif "Pushing Boulder Uphill")
+
+![Biorhythms](https://www.intmath.com/trigonometric-graphs/img/biorhythms.gif "Biorhythms")
+
+> not that I *believe* in biorhythms; but their *wave chart* works well for illustrative purposes😎
+
+- fixed string comparison w/macro
+- structured `main()` to execute each command
+  - refactored for common file I/O in `encode()` and `decode()`
+- tweaked makefile, fixed syntax errors...**builds successfully**❗
+
+### next - 12/06
+
+- [ ] create list of UTs for testing the UI (command line)
+  - [ ] pass all of these (manual) UTs
+- [ ] stubs for `key()`/`encode()`/`decode()`
+- [ ] we need to review tdd/aaa & µnit
+
+---
+
 ## 11/25
+
 - caught-up on life, and realized that we both have a lot to be thankful for...
 - complimentary discussions on:
   - new, exciting work opportunities
@@ -20,7 +44,10 @@
           - design and implement (`getopt()` loop) command line args, input/output files (named and standard), *etc.*  
         2. [ ] review (preferably in debugger) µnit's `example.c`
 
+---
+
 ## 11/04
+
 - discussion on the state of the world... 🎼... Be happy❗😎
 - *projects:*
   1. **job/career**
@@ -33,6 +60,8 @@
   3. **otp**
       - [ ] command line args, std files and named files – convention for *standard* handles is `-`
       - [ ] spec out/implement CLA/getopt(0 loop for otp…
+
+---
 
 ## 10/28
 
@@ -59,6 +88,8 @@
      - [ ] design all three commands for commandline
        - refer back to notes from Wyzant notes (add to repo)
 
+---
+
 ## 10/20
 
 - feeling better about job vs. career
@@ -68,7 +99,7 @@
 - did a deep-ish dive into :
   - [getopt(3): Parse options - Linux man page](https://linux.die.net/man/3/getopt)
 
-### next
+### next - 10/20
 
 - [ ] complete dev. env. setup
   - github/replit/gitpod
@@ -80,6 +111,8 @@
   - When complete, push all updates to repo
 - [ ] design all three command lines
 - [ ] implement `keygen`
+
+---
 
 ## 10/13
 
