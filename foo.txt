@@ -1,4 +1,0 @@
-total 520
--rw-r--r--  1 demitrusbooker  staff  258286 Oct 13 14:46 OTP.pdf
--rw-r--r--  1 demitrusbooker  staff     647 Oct 13 14:50 Wyzant-lesson-4-23-2023.c
--rw-r--r--  1 demitrusbooker  staff       0 Oct 13 14:57 foo.txt
