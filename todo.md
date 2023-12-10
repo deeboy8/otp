@@ -1,17 +1,20 @@
 # lesson summaries
 
 ## 12/10
-- *stubs* - in this/our context - are merely function definitions (*i.e*., implementations that allow you to make progress, *e.g.*,
-  > **reminder** - if there's a reference to a (function) -  a *declaration* enables compilation, a *defintion* enables linking
+
+- *stubs* - in this/our context - are merely function definitions (*i.e*., implementations) that allow you to make progress, *e.g.*,
+  > **reminder** - if there's a reference to a (function) - a *declaration* enables compilation, a *defintion* enables linking
+
   ```C
   return_type encode(...params...) {
     fprintf(stderr, "encode: ...\n", params);
     return success;
   }
   ```
+
 - enabling compilation (declarations) and linking (definitions) are steps in the **TDD** process
 - **that's all folks**...Lesson displaceed by tickets to:
-    ![Go Hawks](https://th.bing.com/th?id=OIF.ypvcLGQKBXGC%2f2ca%2bYR5qg&rs=1&pid=ImgDetMain)
+- ![Go Hawks](https://th.bing.com/th?id=OIF.ypvcLGQKBXGC%2f2ca%2bYR5qg&rs=1&pid=ImgDetMain)
   - **may the best team win**...*kidding*...**Go Hawks**❗❗❗
 
 ### next - 12/10
