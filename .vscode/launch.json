@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Dave's Launch Program",
+            "type": "gdb",
+            "request": "launch",
+            "target": "./otp",
+            "arguments": "-a key",
+            "stopAtEntry": true,
+            "cwd": "${workspaceRoot}",
+            "valuesFormatting": "parseText"
+        },
+        {
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
