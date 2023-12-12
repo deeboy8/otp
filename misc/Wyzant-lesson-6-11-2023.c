@@ -19,3 +19,10 @@ cat new_plain.txt | decode_c key.key | decode_s > new_cipher.txt
 
 // grand finale
 cat plain.txt | encode_c key.key | encode_s | decode_c key.key | decode_s | diff plain.txt // empty 
+
+
+./otp -a encode key.key ---> SUCCESS 
+./otp -a decode key.key ---> SUCCESS 
+./otp encode/decode key.key ---> error ---> usage error
+./otp -a encode/decode ----> error ---> "usage: ./otp requires key file"
+ 

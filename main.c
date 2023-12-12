@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if ((strcmp("key", app_name) == 0)) { //(IS_STR_EQUAL("key", app_name)) {
+    if ((strcmp("key", app_name) == 0)) { //(IS_STR_EQUAL("key", app_name)) { //FIXME! Error for bad memory while debugging 
         char_count = atoi(argv[optind]);
         assert(char_count >= 0);
         generate_key(char_count); // generate_key_file(char_count)--> we need plaintext char count? how come up with char_count?
