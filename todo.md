@@ -1,6 +1,18 @@
 # lesson summaries
 
-## references
+## 12/12
+
+- bug fixing...**AKA** how to pass command line argument(s) (CLAs) to `otp` when using the debugger
+- started to evolve *stubs* (signatures, mock return values) to their final version
+  - pair-programmed (PP) `keygen()` *stub*
+  - discussed *p-code* for `encode()`/`decode()`
+
+### next - 12/12
+
+- [ ] see: **next - 12/10** 😎
+- [ ] more specifically;  `encode()`/`decode()` to level of `key_gen` (*stub*) so UI can be completed - implementation, test and structure/documentation
+
+### references - 12/12
 
 - [One-Time Pad (OTP) Decoder and Encoder | Boxentriq](https://www.boxentriq.com/code-breaking/one-time-pad)
 
