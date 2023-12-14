@@ -19,13 +19,12 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/otp",
-            "args": [],
+            "args": ["-a", "key", "256"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
         }
-
     ]
 }

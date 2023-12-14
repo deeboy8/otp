@@ -2,8 +2,6 @@
 
 ## references
 
-- [One-Time Pad (OTP) Decoder and Encoder | Boxentriq](https://www.boxentriq.com/code-breaking/one-time-pad)
-
 ## 12/10
 
 - *stubs* - in this/our context - are merely function definitions (*i.e*., implementations) that allow you to make progress, *e.g.*,
