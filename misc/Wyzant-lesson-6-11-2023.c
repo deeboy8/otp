@@ -28,4 +28,4 @@ cat plain.txt | encode_c key.key | encode_s | decode_c key.key | decode_s | diff
 ./otp -a encode/decode ----> error ---> "usage: ./otp requires key file"
  */
 
-encode key.key < plaintext.txt > ciphertext.txt
+// encode key.key < plaintext.txt > ciphertext.txt
