@@ -14,36 +14,41 @@ extern char *optarg; //???
 #define KEYFILE "key.txt"
 
 //will take char from each file (key and plaintex) and return an encoded char aka 'x'
-char encode_char(char plaintext_char, char key_char) {
+char encode_char(char plaintext_char) { //}, char key_char) {
     assert(plaintext_char);
-    assert(key_char);
+    // assert(key_char);
     return 'x';
 }
 
-unsigned int get_key_file_length(const char* path) {
+off_t get_key_file_length(const char* path) {
     struct stat statbuf;
     if (stat(path, &statbuf) == 0) {
         return statbuf.st_size;
     }
     printf("failure\n");
+    //add assert
     return -1;
 }
 
 void encode(FILE* key_fd) { //TODO
     assert(key_fd);
     //fprintf(stderr, "encoding message");
-    //get length of key file --> need to create mem space for full text
-    unsigned int key_length = get_key_file_length(KEYFILE);
-    printf("key length is: %d\n", key_length);
-    //read key file into an array
-
+    //get length of key file --> need to create mem space for full text readin from key.txt file
+    // off_t key_length = get_key_file_length(KEYFILE);
+    // printf("key length is: %lld including newline char\n", key_length);
+    // //read key file into an array
+    // char buff[key_length];
+    // int chars_read = read()
 
     //read streaming input from user keyboard/STDIN
-    // char ch;
-    // while (read(STDIN_FILENO, &ch, 1) > 0) {
-    //     char returned_char = encode_char(ch);
-    // }
-    printf("success\n");
+    char ch = '\0';
+    while (read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
+        char returned_char = encode_char(ch);
+        // printf("success\n");
+        // printf("%c ", returned_char);
+        fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
+    }
+    // printf("success\n");
     //readin key file
     //readin from stdin (in a loop) --> its a stream and you don't know when it ends
         //for each plaintext char, encode using char from key file
@@ -59,6 +64,7 @@ void decode(FILE* file) { //TODO
     fprintf(stderr, "decoding message");
     return;
 }
+
 
 bool generate_key(int count, const char* alphabet) { //TODO
     assert(count >= 0);
@@ -113,3 +119,9 @@ int main(int argc, char *argv[]) {
 
     exit(EXIT_SUCCESS);
 }
+
+/*
+make a simple shell script
+allow execute ./otp with diff combo of cl arguments to validate its working
+extra fancy:
+run ./otp capture output > otp.txt , file with expected output then diff both files*/
