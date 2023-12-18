@@ -1,5 +1,26 @@
 # lesson summaries
 
+## 12/16
+
+- couldn't find a definition for *decoupling*, but I think *parameterization* is a better term:
+  - adds flexibility - including testability
+  - makes for more concise code
+  - make code easier to maintain
+- a summary of [Linux Signals](<misc/Linux Signals.md>)
+- a summary of `C` [compiler phases](https://en.cppreference.com/w/c/language/translation_phases)
+  > - let's look at the `-E` option again
+- patched read loop, to make forward progress, but introduced a constraint WRT `\n`:
+  - need to do some research on how different *read* functions handle `\n` and/or when `stdin` is the keyboard
+
+## next 12/16
+
+- [ ] keep making forward progress on completing the UI
+  > you can always go back and fix issues in a second pass
+- [ ] create a UI test script w/different invocations
+  - [ ] consider creating *golden* test files and automate further by comparing ([diff(1): compare files line by line](https://linux.die.net/man/1/diff)) **actual** to **expected** (golden)
+
+---
+
 ## 12/12
 
 - bug fixing...**AKA** how to pass command line argument(s) (CLAs) to `otp` when using the debugger
