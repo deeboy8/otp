@@ -13,7 +13,7 @@ extern char *optarg; //???
 #define ALPHABET "abc" //decoupling(?) --> offers flexibility
 #define KEYFILE "key.txt"
 
-//will take char from each file (key and plaintex) and return an encoded char aka 'x'
+//will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
 char encode_char(char plaintext_char) { //}, char key_char) {
     assert(plaintext_char);
     // assert(key_char);
@@ -26,28 +26,30 @@ off_t get_key_file_length(const char* path) {
         return statbuf.st_size;
     }
     printf("failure\n");
-    //add assert
+    //add assert?????
     return -1;
 }
 
 void encode(FILE* key_fd) { //TODO
     assert(key_fd);
-    //fprintf(stderr, "encoding message");
-    //get length of key file --> need to create mem space for full text readin from key.txt file
-    // off_t key_length = get_key_file_length(KEYFILE);
-    // printf("key length is: %lld including newline char\n", key_length);
-    // //read key file into an array
-    // char buff[key_length];
-    // int chars_read = read()
+    // int key_fd_as_int = (int)key_fd;
+    off_t key_length = get_key_file_length(KEYFILE);
+    printf("key length is: %lld including newline char\n", key_length);
+
+    //read entire key file into an array
+    char buff[key_length];
+    // int chars_read = read(key_fd_as_int, &buff, key_length); //removed as difficult to convert FILE* to int??????
+    size_t chars_read = fread(&buff, sizeof(char), key_length, key_fd);
+    assert(chars_read > 0);
 
     //read streaming input from user keyboard/STDIN
-    char ch = '\0';
-    while (read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
-        char returned_char = encode_char(ch);
-        // printf("success\n");
-        // printf("%c ", returned_char);
-        fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
-    }
+    // char ch = '\0';
+    // while (read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
+    //     char returned_char = encode_char(ch);
+    //     // printf("success\n");
+    //     // printf("%c ", returned_char);
+    //     fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
+    // }
     // printf("success\n");
     //readin key file
     //readin from stdin (in a loop) --> its a stream and you don't know when it ends
@@ -80,10 +82,11 @@ int main(int argc, char *argv[]) {
     int char_count;
     char* app_name;
 
+    //setting up command line arguments and how user will interact with the program
     while ((opt = getopt(argc, argv, "a:mv")) != -1) { 
         switch (opt) {
         case 'a':
-            fprintf(stderr, "yup, got a\n"); // fprintf to stderr  to seperate from output of program !!!!!!!!!!
+            fprintf(stderr, "yup, got a\n"); // fprintf to stderr to seperate from output of program !!!!!!!!!! HOW DOES THAT MAKE SENSE???
             app_name = optarg;
             break;
         case 'm':
@@ -108,7 +111,7 @@ int main(int argc, char *argv[]) {
     } else {
         fd = fopen(argv[optind], "r"); // key.key
         if (IS_STR_EQUAL("encode", app_name)) {
-            encode(fd); //do I want to pass around a file descriptor???? TODO
+            encode(fd); //do I want to pass around a file descriptor?????????????
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             decode(fd);
