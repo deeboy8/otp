@@ -33,7 +33,6 @@ off_t get_key_file_length(const char* path) {
 
 void encode(FILE* key_fd) { //TODO
     assert(key_fd);
-    // int key_fd_as_int = (int)key_fd;
     off_t key_length = get_key_file_length(KEYFILE);
 
     //read entire key file into an array
@@ -48,8 +47,7 @@ void encode(FILE* key_fd) { //TODO
     while ((read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') && key_index_counter < key_length) { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
         char returned_char = encode_char(ch, buff[key_index_counter]);
         key_index_counter++;
-        // printf("%c ", returned_char);
-        // fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
+        // fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug --> do you place thiese everywhere????
         assert(returned_char);
     }
     printf("success\n");
