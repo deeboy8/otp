@@ -1,4 +1,5 @@
-﻿encode: plain + key = cipher
+﻿/*
+encode: plain + key = cipher
 decode: cipher + key = plain
 
 > encode file.key < foo.txt > foo.cipher // encode foo.txt (stdin) w/key in file.key
@@ -19,3 +20,4 @@ file.key???
 -- for i = 0 to command-line arg (e.g., 256)
 ---- key += alphabet[ rand() % len(alphabet) ]
 -- write key to stdout
+*/
