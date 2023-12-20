@@ -14,9 +14,10 @@ extern char *optarg; //???
 #define KEYFILE "key.txt"
 
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
-char encode_char(char plaintext_char) { //}, char key_char) {
+char encode_char(char plaintext_char, char key_char) {
     assert(plaintext_char);
-    // assert(key_char);
+    assert(key_char);
+    printf("%c and %c\n", plaintext_char, key_char);
     return 'x';
 }
 
@@ -34,7 +35,6 @@ void encode(FILE* key_fd) { //TODO
     assert(key_fd);
     // int key_fd_as_int = (int)key_fd;
     off_t key_length = get_key_file_length(KEYFILE);
-    printf("key length is: %lld including newline char\n", key_length);
 
     //read entire key file into an array
     char buff[key_length];
@@ -43,20 +43,16 @@ void encode(FILE* key_fd) { //TODO
     assert(chars_read > 0);
 
     //read streaming input from user keyboard/STDIN
-    // char ch = '\0';
-    // while (read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
-    //     char returned_char = encode_char(ch);
-    //     // printf("success\n");
-    //     // printf("%c ", returned_char);
-    //     fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
-    // }
-    // printf("success\n");
-    //readin key file
-    //readin from stdin (in a loop) --> its a stream and you don't know when it ends
-        //for each plaintext char, encode using char from key file
-    //write each encoded char to stdout
-
-    // three 1. read in the key or pass in the key (use stat to get the size of the key file), 2. plaintext chars from stdin (read until end of file), 3. encode each char (encode_char)
+    char ch = '\0';
+    int key_index_counter = 0;
+    while ((read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') && key_index_counter < key_length) { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
+        char returned_char = encode_char(ch, buff[key_index_counter]);
+        key_index_counter++;
+        // printf("%c ", returned_char);
+        // fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
+        assert(returned_char);
+    }
+    printf("success\n");
 
     //return;
 }
