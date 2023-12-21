@@ -14,6 +14,12 @@ extern char *optarg; //???
 #define KEYFILE "key.txt"
 #define CIPHERTEXT "ciphertext.txt"
 
+char decode_char(char cipher_char, char key_char) {
+    assert(cipher_char);
+    assert(key_char);
+    return 'm';
+}
+
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
 //should I make this function one that can encode and decode --> seems wise
 char encode_char(char plaintext_char, char key_char) {
@@ -37,7 +43,6 @@ bool encode(FILE* key_fd) { //TODO
     assert(key_fd);
     off_t key_length = get_file_length(KEYFILE);
     bool flag = false;
-    int n;
 
     //read entire key file into an array
     char buff[key_length];
@@ -66,17 +71,25 @@ bool decode(FILE* key_fd) { //TODO
     off_t ciphertext_len = get_file_length(CIPHERTEXT);
     //secure length of key file
     off_t key_length = get_file_length(KEYFILE);
-
+    
     //read in ciphertext    
     char ciphertext_buff[ciphertext_len];
-    size_t chars_read = fread(&ciphertext_buff, sizeof(char), ciphertext_len, ciphertext.txt);
-    assert(chars_read > 0);
-
+    FILE *fp = fopen(CIPHERTEXT, "r"); // must use binary mode
+    size_t cipher_chars_read = fread(&ciphertext_buff, sizeof(char), ciphertext_len, fp);
+    assert(cipher_chars_read > 0);
+    printf("...or here\n");
     //read in key file
     char key_buff[key_length];
-    size_t chars_read = fread(&key_buff, sizeof(char), key_length, key_fd);
-    
-    
+    size_t key_chars_read = fread(&key_buff, sizeof(char), key_length, key_fd);
+    assert(key_chars_read > 0);
+
+    int n = 0;
+    while(n < ciphertext_len && n < key_length) {
+        char value = decode_char(ciphertext_buff[n], key_buff[n]);
+        assert(value > 0);
+        printf("letters passed to decode: %c and %c\n", ciphertext_buff[n], key_buff[n]);
+        n++;
+    }
     
     return flag;
 }
