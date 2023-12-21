@@ -12,16 +12,18 @@ extern char *optarg; //???
 #define IS_STR_EQUAL(str1, str2) (strcmp(str1, str2) == 0)
 #define ALPHABET "abc" //decoupling(?) --> offers flexibility
 #define KEYFILE "key.txt"
+#define CIPHERTEXT "ciphertext.txt"
 
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
+//should I make this function one that can encode and decode --> seems wise
 char encode_char(char plaintext_char, char key_char) {
     assert(plaintext_char);
     assert(key_char);
-    printf("%c and %c\n", plaintext_char, key_char);
+    // printf("%c and %c\n", plaintext_char, key_char);
     return 'x';
 }
 
-off_t get_key_file_length(const char* path) {
+off_t get_file_length(const char* path) {
     struct stat statbuf;
     if (stat(path, &statbuf) == 0) {
         return statbuf.st_size;
@@ -31,9 +33,11 @@ off_t get_key_file_length(const char* path) {
     return -1;
 }
 
-void encode(FILE* key_fd) { //TODO
+bool encode(FILE* key_fd) { //TODO
     assert(key_fd);
-    off_t key_length = get_key_file_length(KEYFILE);
+    off_t key_length = get_file_length(KEYFILE);
+    bool flag = false;
+    int n;
 
     //read entire key file into an array
     char buff[key_length];
@@ -47,18 +51,34 @@ void encode(FILE* key_fd) { //TODO
     while ((read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') && key_index_counter < key_length) { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
         char returned_char = encode_char(ch, buff[key_index_counter]);
         key_index_counter++;
-        // fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug --> do you place thiese everywhere????
         assert(returned_char);
     }
-    printf("success\n");
+    //TODO need to include way to turn flag true upon success
 
-    //return;
+    return flag;
 }
 
-void decode(FILE* file) { //TODO
-    assert(file);
-    fprintf(stderr, "decoding message");
-    return;
+bool decode(FILE* key_fd) { //TODO
+    assert(key_fd);
+    bool flag = false;
+
+    //secure length of ciphertext
+    off_t ciphertext_len = get_file_length(CIPHERTEXT);
+    //secure length of key file
+    off_t key_length = get_file_length(KEYFILE);
+
+    //read in ciphertext    
+    char ciphertext_buff[ciphertext_len];
+    size_t chars_read = fread(&ciphertext_buff, sizeof(char), ciphertext_len, ciphertext.txt);
+    assert(chars_read > 0);
+
+    //read in key file
+    char key_buff[key_length];
+    size_t chars_read = fread(&key_buff, sizeof(char), key_length, key_fd);
+    
+    
+    
+    return flag;
 }
 
 
