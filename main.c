@@ -25,7 +25,6 @@ char decode_char(char cipher_char, char key_char) {
 char encode_char(char plaintext_char, char key_char) {
     assert(plaintext_char);
     assert(key_char);
-    // printf("%c and %c\n", plaintext_char, key_char);
     return 'x';
 }
 
@@ -34,7 +33,7 @@ off_t get_file_length(const char* path) {
     if (stat(path, &statbuf) == 0) {
         return statbuf.st_size;
     }
-    printf("failure\n");
+    fprintf(stderr, "failure to access file\n");
     //add assert?????
     return -1;
 }
