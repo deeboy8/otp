@@ -116,9 +116,10 @@ int main(int argc, char *argv[]) {
             app_name = optarg;
             break;
         case 'm':
-            printf("total characters: , got m\n");
+            //if argv[2] == encode, print argv[3]
+            printf("total characters: %d\n", argv[optind]);
             break;
-        case 'v':
+        case 'v': //what is verbose?
             printf("yup, got v\n");
             break;
         default:
@@ -129,7 +130,7 @@ int main(int argc, char *argv[]) {
 
     if ((strcmp("key", app_name) == 0)) { //(IS_STR_EQUAL("key", app_name)) { //FIXME! Error for bad memory while debugging 
         char_count = atoi(argv[optind]);
-        assert(char_count >= 0);
+        assert(char_count > 0);
         if (!generate_key(char_count, ALPHABET)) {
             fprintf(stderr, "error generating key\n");
             exit(EXIT_FAILURE);
