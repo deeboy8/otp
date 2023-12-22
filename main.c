@@ -73,19 +73,19 @@ bool decode(FILE* key_fd) { //TODO
     
     //read in ciphertext    
     char ciphertext_buff[ciphertext_len];
-    FILE *fp = fopen(CIPHERTEXT, "r"); // must use binary mode
+    FILE *fp = fopen(CIPHERTEXT, "r");
     size_t cipher_chars_read = fread(&ciphertext_buff, sizeof(char), ciphertext_len, fp);
     assert(cipher_chars_read > 0);
-    printf("...or here\n");
+    
     //read in key file
     char key_buff[key_length];
     size_t key_chars_read = fread(&key_buff, sizeof(char), key_length, key_fd);
     assert(key_chars_read > 0);
 
     int n = 0;
-    while(n < ciphertext_len && n < key_length) {
+    while(n < ciphertext_len && n < key_length) { //both or just key length necessary for if statement
         char value = decode_char(ciphertext_buff[n], key_buff[n]);
-        assert(value > 0);
+        assert(value > 96 && value < 123);
         printf("letters passed to decode: %c and %c\n", ciphertext_buff[n], key_buff[n]);
         n++;
     }
