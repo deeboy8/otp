@@ -26,6 +26,7 @@ off_t get_file_length(const char* path) {
 
 bool encode(FILE* fd_key) { 
     assert(fd_key);
+    fprintf(stderr, "encode successfully working!");
     return true;
 }
     
@@ -57,6 +58,7 @@ bool encode(FILE* fd_key) {
 
 bool decode(FILE* key_fd) {
     assert(key_fd);
+    fprintf(stderr, "decode successfully working!");
     return true;
 }
 
@@ -73,6 +75,17 @@ int main(int argc, char *argv[]) {
     FILE* fd;
     int char_count;
     char* app_name;
+
+    //
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s requires '-a' flag and arguments\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    if ((!IS_STR_EQUAL(argv[1], "-a")) && argc >= 3) {
+        fprintf(stderr, "Usage: %s requires '-a' flag for processing \n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
     //setting up command line arguments and how user will interact with the program
     while ((opt = getopt(argc, argv, "a:mv")) != -1) { 
