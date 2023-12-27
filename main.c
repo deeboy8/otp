@@ -1,75 +1,71 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <sys/stat.h>
+#include "otp.h"
 
-extern char *optarg; //???
+char decode_char(char cipher_char, char key_char) {
+    assert(cipher_char);
+    assert(key_char);
+    return 'm';
+}
 
-// macros operate on replacement
-#define IS_STR_EQUAL(str1, str2) (strcmp(str1, str2) == 0)
-#define ALPHABET "abc" //decoupling(?) --> offers flexibility
-#define KEYFILE "key.txt"
-
-//will take char from each file (key and plaintex) and return an encoded char aka 'x'
-char encode_char(char plaintext_char) { //}, char key_char) {
+//will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
+//should I make this function one that can encode and decode --> seems wise
+char encode_char(char plaintext_char, char key_char) {
     assert(plaintext_char);
-    // assert(key_char);
+    assert(key_char);
     return 'x';
 }
 
-off_t get_key_file_length(const char* path) {
+off_t get_file_length(const char* path) {
     struct stat statbuf;
     if (stat(path, &statbuf) == 0) {
         return statbuf.st_size;
     }
-    printf("failure\n");
-    //add assert
+    fprintf(stderr, "failure to access file\n");
+    
     return -1;
 }
 
-void encode(FILE* key_fd) { //TODO
-    assert(key_fd);
-    //fprintf(stderr, "encoding message");
-    //get length of key file --> need to create mem space for full text readin from key.txt file
-    // off_t key_length = get_key_file_length(KEYFILE);
-    // printf("key length is: %lld including newline char\n", key_length);
-    // //read key file into an array
-    // char buff[key_length];
-    // int chars_read = read()
-
-    //read streaming input from user keyboard/STDIN
-    char ch = '\0';
-    while (read(STDIN_FILENO, &ch, 1) > 0 && ch != '\n') { //FIXME  MIGHT NEED A BETTER WAY TO LOOP DUE TO NOT BEING ABLE TO HAVE NEWLINE CHAR
-        char returned_char = encode_char(ch);
-        // printf("success\n");
-        // printf("%c ", returned_char);
-        fprintf(stderr, "ch: %c, r_ch: %c\n", ch, returned_char); //--> use to debug
-    }
-    // printf("success\n");
-    //readin key file
-    //readin from stdin (in a loop) --> its a stream and you don't know when it ends
-        //for each plaintext char, encode using char from key file
-    //write each encoded char to stdout
-
-    // three 1. read in the key or pass in the key (use stat to get the size of the key file), 2. plaintext chars from stdin (read until end of file), 3. encode each char (encode_char)
-
-    //return;
+bool encode(FILE* fd_key) { 
+    assert(fd_key);
+    fprintf(stderr, "encode successfully working!");
+    return true;
 }
+    
+/*  focus on UI: function doesn't have to do anything; write minimal amount of code for the fx to compile and execute
+    //in this instance, return True or False but very very very simple --> treat as black box
+    //only thing know about encode is it returns a bool and takes in a FILE*
+    //UI and creation of stubs is one liners ONLY to help build main fx 
+    //------ FOCUS ON UI--------
 
-void decode(FILE* file) { //TODO
-    assert(file);
-    fprintf(stderr, "decoding message");
-    return;
+    //write stubs first ensuring compile properly ---> move to TDD --> implementation (STI)
+
+    TDD Development (pure)
+    1. write a unit test
+        //encode should fail with null fd()
+            //have to ref encode fx
+    2. create a header file for subject under test (SUT) --> declaration for the encode fx --> COMPILE
+    3. write a stub (abs bare min) that implements/defines SUT aka encode (now have .C file to go with .h file) ---> LINK bc have definition/implementation
+    --UNIT TEST CAN RUN AT THIS POINT --> BUT WILL FAIL BC NO IMPLEMENTATION--
+    4. add code to function until unit test under question passes
+    5. create another unit test, declaration, defintion, etc. --> repeat 
+    --repeat each step until get the test to pass--
+
+    DG Approach
+    start with #2
+        then go create unit tests
+            focus: leverage tooling of IDE and intellisense
+    
+}*/
+
+bool decode(FILE* key_fd) {
+    assert(key_fd);
+    fprintf(stderr, "decode successfully working!");
+    return true;
 }
 
 
 bool generate_key(int count, const char* alphabet) { //TODO
     assert(count >= 0);
     assert(alphabet);
-    //fprintf(stderr, "generating randomized set of characters\n");
     printf("ksdfoijsdlfjskdlfji\n");
     return true; 
 }
@@ -80,17 +76,31 @@ int main(int argc, char *argv[]) {
     int char_count;
     char* app_name;
 
+    //
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s requires '-a' flag and arguments\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    if ((!IS_STR_EQUAL(argv[1], "-a")) && argc >= 3) {
+        fprintf(stderr, "Usage: %s requires '-a' flag for processing \n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    //setting up command line arguments and how user will interact with the program
     while ((opt = getopt(argc, argv, "a:mv")) != -1) { 
         switch (opt) {
         case 'a':
-            fprintf(stderr, "yup, got a\n"); // fprintf to stderr  to seperate from output of program !!!!!!!!!!
+            //QUESTION: fprintf to stderr to seperate from output of program !!!!!!!!!! HOW DOES THAT MAKE SENSE??? --> stderr to screen, stdout to "next file"
             app_name = optarg;
             break;
         case 'm':
-            printf("total characters: , got m\n");
+            //if argv[2] == encode, print argv[3]
+            //else break
+            printf("total characters: %s\n", argv[optind]);
             break;
-        case 'v':
-            printf("yup, got v\n");
+        case 'v': //what is verbose? --> key gen print each value as it's discovered, e/d each character as processed --> enable more output
+            printf("yup, got v\n"); //notify still running, notify of each step is excuted and terminated
             break;
         default:
             fprintf(stderr, "Usage: %s requires the use of a keyword: key, encode or decode\n", argv[0]);
@@ -100,7 +110,7 @@ int main(int argc, char *argv[]) {
 
     if ((strcmp("key", app_name) == 0)) { //(IS_STR_EQUAL("key", app_name)) { //FIXME! Error for bad memory while debugging 
         char_count = atoi(argv[optind]);
-        assert(char_count >= 0);
+        assert(char_count > 0);
         if (!generate_key(char_count, ALPHABET)) {
             fprintf(stderr, "error generating key\n");
             exit(EXIT_FAILURE);
@@ -108,7 +118,7 @@ int main(int argc, char *argv[]) {
     } else {
         fd = fopen(argv[optind], "r"); // key.key
         if (IS_STR_EQUAL("encode", app_name)) {
-            encode(fd); //do I want to pass around a file descriptor???? TODO
+            encode(fd); 
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             decode(fd);
