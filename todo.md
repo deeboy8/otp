@@ -1,5 +1,24 @@
 # lesson summaries
 
+## 12/24
+
+- discussed `FILE*` vs. file descriptors (`int`) - see [stdio](https://www.man7.org/linux/man-pages/man3/stdio.3.html) versus [fcntl](https://www.man7.org/linux/man-pages/man2/fcntl.2.html)
+  - [fileno](https://www.man7.org/linux/man-pages/man3/fileno.3.html) extracts the`fd` from a given `FILE*`
+- had a discussion on the approach you were taking - implementing functionality - and the approach I wanted you to take, which is to get the UI (CLAs) working first, using more of a *top-down* approach and *stubs*, and then use TDD to implement the actual functionality (vs. the initial *stubs*)
+
+>>> - I think we're on the same page now - **yes?**
+
+- talked through the *pure* and *adulterated* approaches to TDD
+  - essentially when the `.h` file is created for the *SUT* (subject under test), *e.g.*, `encode()`, `decode()`, *etc.* - due to modern-day tooling
+
+### next - 12/24
+
+- [ ] complete the UI
+  - [ ] implementation
+  - [ ] testing (script of different valid/invalid invocations)
+
+---
+
 ## 12/16
 
 - couldn't find a definition for *decoupling*, but I think *parameterization* is a better term:
