@@ -26,39 +26,17 @@ off_t get_file_length(const char* path) {
 
 bool encode(FILE* fd_key) { 
     assert(fd_key);
-    fprintf(stderr, "encode successfully working!");
+    fprintf(stderr, "encode successfully working!\n");
     return true;
 }
-    
-/*  focus on UI: function doesn't have to do anything; write minimal amount of code for the fx to compile and execute
-    //in this instance, return True or False but very very very simple --> treat as black box
-    //only thing know about encode is it returns a bool and takes in a FILE*
-    //UI and creation of stubs is one liners ONLY to help build main fx 
-    //------ FOCUS ON UI--------
 
-    //write stubs first ensuring compile properly ---> move to TDD --> implementation (STI)
-
-    TDD Development (pure)
-    1. write a unit test
-        //encode should fail with null fd()
-            //have to ref encode fx
-    2. create a header file for subject under test (SUT) --> declaration for the encode fx --> COMPILE
-    3. write a stub (abs bare min) that implements/defines SUT aka encode (now have .C file to go with .h file) ---> LINK bc have definition/implementation
-    --UNIT TEST CAN RUN AT THIS POINT --> BUT WILL FAIL BC NO IMPLEMENTATION--
-    4. add code to function until unit test under question passes
-    5. create another unit test, declaration, defintion, etc. --> repeat 
-    --repeat each step until get the test to pass--
-
-    DG Approach
-    start with #2
-        then go create unit tests
-            focus: leverage tooling of IDE and intellisense
-    
-}*/
-
+//create ciphetext --> original message
 bool decode(FILE* key_fd) {
     assert(key_fd);
-    fprintf(stderr, "decode successfully working!");
+    printf("decode successful\n");
+    //use fopen to create a document each time or rewrite to a document the ciphertext
+        //this message needs to be the same as original message entered in stdin by user  
+    // fprintf(stderr, "decode successfully working!\n");
     return true;
 }
 
@@ -70,26 +48,49 @@ bool generate_key(int count, const char* alphabet) { //TODO
     return true; 
 }
 
+void usage() { //TODO
+// void usage(int exit_code) { //TODO
+    // assert(exit_code == EXIT_FAILURE || exit_code == EXIT_SUCCESS); //validate not using usage in incorrect way
+    printf("usage: ./otp... \n"); //will have all the values available
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char *argv[]) {
-    int opt;
-    FILE* fd;
-    int char_count;
-    char* app_name;
+    int opt = 0;
+    FILE* fd = NULL;
+    int char_count = 0;
+    char* app_name = NULL;
 
-    //
-    if (argc < 3) {
-        fprintf(stderr, "Usage: %s requires '-a' flag and arguments\n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
-
-    if ((!IS_STR_EQUAL(argv[1], "-a")) && argc >= 3) {
-        fprintf(stderr, "Usage: %s requires '-a' flag for processing \n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
-
+//error checking here redundent
+    //not smart -> if add another flag world of problems
+    //one usage error -> this is how hte cmd line shuld be used 
+        //1. very terse usage
+        //2. help flag very detailed reporting of program -> then exit 
+    // if (argc < 4) {
+    //     if (argc == 1) {
+    //         fprintf(stderr, "Usage: %s requires more commands for processing\n", argv[0]);
+    //     }
+    //     else if (argc == 3) {
+    //         fprintf(stderr, "Usage: %s requires a key file or a processing command: encode or decode\n", argv[0]);
+    //     }
+    //     //if not -a flag is passed
+    //     else if ((!IS_STR_EQUAL(argv[1], "-a"))) {
+    //         fprintf(stderr, "Usage: %s currently requires '-a' flag for processing\n", argv[0]);
+    //     }
+    //     else if (argc == 3 && (!(IS_STR_EQUAL(argv[3], "key.txt") || IS_STR_EQUAL(argv[3], "encode") || IS_STR_EQUAL(argv[3], "decode")))) {
+    //         fprintf(stderr, "Usage: %s requires passing of a key file or processing command\n", argv[0]);
+    //     }
+    //     exit(EXIT_FAILURE);
+    // }
+        
     //setting up command line arguments and how user will interact with the program
-    while ((opt = getopt(argc, argv, "a:mv")) != -1) { 
+    //setting up state -> then do processing
+    // while eloop will be 90% of UI 
+    while ((opt = getopt(argc, argv, "a:mvh")) != -1) { 
         switch (opt) {
+        case 'h':
+            printf("detailed help goes here\n"); //FIXME 
+            exit(EXIT_SUCCESS);
         case 'a':
             //QUESTION: fprintf to stderr to seperate from output of program !!!!!!!!!! HOW DOES THAT MAKE SENSE??? --> stderr to screen, stdout to "next file"
             app_name = optarg;
@@ -103,12 +104,18 @@ int main(int argc, char *argv[]) {
             printf("yup, got v\n"); //notify still running, notify of each step is excuted and terminated
             break;
         default:
-            fprintf(stderr, "Usage: %s requires the use of a keyword: key, encode or decode\n", argv[0]);
-            exit(EXIT_FAILURE); // better to return -1?
+            // fprintf(stderr, "Usage: %s requires the use of a keyword: key, encode or decode\n", argv[0]); --> can use for usage fx 
+            // exit(EXIT_FAILURE); // better to return -1?
+            usage();
         }
     }
-
-    if ((strcmp("key", app_name) == 0)) { //(IS_STR_EQUAL("key", app_name)) { //FIXME! Error for bad memory while debugging 
+    
+    //here is hte client/program split
+    //beginning to run alogirthm 
+    if (app_name == NULL) {
+        usage();  //
+    }
+    if ((IS_STR_EQUAL("key", app_name))) {
         char_count = atoi(argv[optind]);
         assert(char_count > 0);
         if (!generate_key(char_count, ALPHABET)) {
@@ -122,12 +129,15 @@ int main(int argc, char *argv[]) {
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             decode(fd);
+        } else {
+            fclose(fd); 
+            usage();
         }
-
         fclose(fd); 
-    }
+        exit(EXIT_SUCCESS);
+    } 
 
-    exit(EXIT_SUCCESS);
+    usage();
 }
 
 /*
