@@ -1,5 +1,17 @@
 # lesson summaries
 
+## 12/31
+
+- discussed holiday celebrations
+- had a lengthy discussion on how you appreciated the delination (client/server, UI/functionality...) and how the principal of *separation of concerns* (SoC) is a good thing - based on *input UI* (in `otp` - the command line), *transformation* (computation) and *output UI*
+- added *help* CLA but introduced a bug along the way
+
+### next - 12/31
+
+>> same
+
+---
+
 ## 12/24
 
 - discussed `FILE*` vs. file descriptors (`int`) - see [stdio](https://www.man7.org/linux/man-pages/man3/stdio.3.html) versus [fcntl](https://www.man7.org/linux/man-pages/man2/fcntl.2.html)
