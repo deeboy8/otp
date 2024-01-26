@@ -2,7 +2,8 @@ CC = gcc
 CFLAGS  += -Wall -Werror -Wextra -g3
 SANITIZE = -fsanitize=address
 MAIN = otp
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard *.c) munit/munit.c 
+INCLUDES := $(INCLUDES) munit/munit.h
 OBJS = $(SRCS:.c=.o)
 
 ALL: $(MAIN)
