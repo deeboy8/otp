@@ -40,11 +40,31 @@ bool decode(FILE* key_fd) {
     return true;
 }
 
+void get_random_numb(int length) {
+    // int i;
+    
+    assert(length);
+    printf("length is: %d\n", length);
 
-bool generate_key(int count, const char* alphabet) { //TODO
+    //initialize random number generator using time
+    srand(time(NULL));
+
+    for (int i = 0; i < 5; i++) {
+        printf("i is: %d\n", rand() % length + 1);
+    }
+}
+
+//generation of key to be used to encode and decode plaintext
+bool generate_key(int count, const char* alphabet, const char* plaintext) { //TODO
     assert(count >= 0);
     assert(alphabet);
-    printf("ksdfoijsdlfjskdlfji\n");
+    printf("plaintext is: %s\n", plaintext);
+    
+    //create random number generator to obtain characters from alphabet
+    //int rand_numb = 
+    get_random_numb(strlen(ALPHABET));
+   // char rand_char = get_random_numb(rand_numb);
+    // printf("ksdfoijsdlfjskdlfji\n");
     return true; 
 }
 
@@ -66,22 +86,6 @@ int main(int argc, char *argv[]) {
     //one usage error -> this is how hte cmd line shuld be used 
         //1. very terse usage
         //2. help flag very detailed reporting of program -> then exit 
-    // if (argc < 4) {
-    //     if (argc == 1) {
-    //         fprintf(stderr, "Usage: %s requires more commands for processing\n", argv[0]);
-    //     }
-    //     else if (argc == 3) {
-    //         fprintf(stderr, "Usage: %s requires a key file or a processing command: encode or decode\n", argv[0]);
-    //     }
-    //     //if not -a flag is passed
-    //     else if ((!IS_STR_EQUAL(argv[1], "-a"))) {
-    //         fprintf(stderr, "Usage: %s currently requires '-a' flag for processing\n", argv[0]);
-    //     }
-    //     else if (argc == 3 && (!(IS_STR_EQUAL(argv[3], "key.txt") || IS_STR_EQUAL(argv[3], "encode") || IS_STR_EQUAL(argv[3], "decode")))) {
-    //         fprintf(stderr, "Usage: %s requires passing of a key file or processing command\n", argv[0]);
-    //     }
-    //     exit(EXIT_FAILURE);
-    // }
         
     //setting up command line arguments and how user will interact with the program
     //setting up state -> then do processing
@@ -92,12 +96,9 @@ int main(int argc, char *argv[]) {
             printf("detailed help goes here\n"); //FIXME 
             exit(EXIT_SUCCESS);
         case 'a':
-            //QUESTION: fprintf to stderr to seperate from output of program !!!!!!!!!! HOW DOES THAT MAKE SENSE??? --> stderr to screen, stdout to "next file"
             app_name = optarg;
             break;
         case 'm':
-            //if argv[2] == encode, print argv[3]
-            //else break
             printf("total characters: %s\n", argv[optind]);
             break;
         case 'v': //what is verbose? --> key gen print each value as it's discovered, e/d each character as processed --> enable more output
@@ -110,15 +111,15 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    //here is hte client/program split
+    //here is the client/program split
     //beginning to run alogirthm 
     if (app_name == NULL) {
-        usage();  //
+        usage(); 
     }
-    if ((IS_STR_EQUAL("key", app_name))) {
+    if ((IS_STR_EQUAL(app_name, "key"))) {
         char_count = atoi(argv[optind]);
         assert(char_count > 0);
-        if (!generate_key(char_count, ALPHABET)) {
+        if (!generate_key(char_count, ALPHABET, argv[4])) {
             fprintf(stderr, "error generating key\n");
             exit(EXIT_FAILURE);
         }
