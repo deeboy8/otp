@@ -1,10 +1,25 @@
 # lesson summaries
 
+## 2/9
+
+- discussed priorities/progress and being in the right _mood_ for differrent _types_ of work and taking advantage of _time-shifting_
+- reviewed how we partitioned `otp` into two parts:
+  - **UI**: command line args
+    - testing via invocations w/combinations of CLAs, driven from a script (black-box)
+  - **algorithm**: key generation, encoding and decoding related `f()`-s
+    - testing via μunit tests (white-box)
+- wrote a simple UT - `encode_one_char()`  - using the _AAA_ pattern
+
+### next - 2/9
+
+- using μunit's `setup()` and `teardown()` (if needed) to setup known (_expected_) `key`, `plain text` and `cipher text` values for use in UTs
+- write both _positive_ (**S**ubject **U**nder **T**est - in this case the `f()` under test - passes) and _negative_ (SUT fails...but UT still passes as failure is the _expected_ value) UTs
+
 ## 12/31
 
 - discussed holiday celebrations
-- had a lengthy discussion on how you appreciated the delination (client/server, UI/functionality...) and how the principal of *separation of concerns* (SoC) is a good thing - based on *input UI* (in `otp` - the command line), *transformation* (computation) and *output UI*
-- added *help* CLA but introduced a bug along the way
+- had a lengthy discussion on how you appreciated the delination (client/server, UI/functionality...) and how the principal of _separation of concerns_ (SoC) is a good thing - based on _input UI_ (in `otp` - the command line), _transformation_ (computation) and *output UI*
+- added _help_ CLA but introduced a bug along the way
 
 ### next - 12/31
 
@@ -16,12 +31,12 @@
 
 - discussed `FILE*` vs. file descriptors (`int`) - see [stdio](https://www.man7.org/linux/man-pages/man3/stdio.3.html) versus [fcntl](https://www.man7.org/linux/man-pages/man2/fcntl.2.html)
   - [fileno](https://www.man7.org/linux/man-pages/man3/fileno.3.html) extracts the`fd` from a given `FILE*`
-- had a discussion on the approach you were taking - implementing functionality - and the approach I wanted you to take, which is to get the UI (CLAs) working first, using more of a *top-down* approach and *stubs*, and then use TDD to implement the actual functionality (vs. the initial *stubs*)
+- had a discussion on the approach you were taking - implementing functionality - and the approach I wanted you to take, which is to get the UI (CLAs) working first, using more of a _top-down_ approach and _stubs_, and then use TDD to implement the actual functionality (vs. the initial _stubs_)
 
 >>> - I think we're on the same page now - **yes?**
 
-- talked through the *pure* and *adulterated* approaches to TDD
-  - essentially when the `.h` file is created for the *SUT* (subject under test), *e.g.*, `encode()`, `decode()`, *etc.* - due to modern-day tooling
+- talked through the _pure_ and _adulterated_ approaches to TDD
+  - essentially when the `.h` file is created for the _SUT_ (subject under test), _e.g._, `encode()`, `decode()`, _etc._ - due to modern-day tooling
 
 ### next - 12/24
 
@@ -33,7 +48,7 @@
 
 ## 12/16
 
-- couldn't find a definition for *decoupling*, but I think *parameterization* is a better term:
+- couldn't find a definition for _decoupling_, but I think _parameterization_ is a better term:
   - adds flexibility - including testability
   - makes for more concise code
   - make code easier to maintain
@@ -41,35 +56,35 @@
 - a summary of `C` [compiler phases](https://en.cppreference.com/w/c/language/translation_phases)
   > - let's look at the `-E` option again
 - patched read loop, to make forward progress, but introduced a constraint WRT `\n`:
-  - need to do some research on how different *read* functions handle `\n` and/or when `stdin` is the keyboard
+  - need to do some research on how different _read_ functions handle `\n` and/or when `stdin` is the keyboard
 
 ## next 12/16
 
 - [ ] keep making forward progress on completing the UI
   > you can always go back and fix issues in a second pass
 - [ ] create a UI test script w/different invocations
-  - [ ] consider creating *golden* test files and automate further by comparing ([diff(1): compare files line by line](https://linux.die.net/man/1/diff)) **actual** to **expected** (golden)
+  - [ ] consider creating _golden_ test files and automate further by comparing ([diff(1): compare files line by line](https://linux.die.net/man/1/diff)) **actual** to **expected** (golden)
 
 ---
 
 ## 12/12
 
 - bug fixing...**AKA** how to pass command line argument(s) (CLAs) to `otp` when using the debugger
-- started to evolve *stubs* (signatures, mock return values) to their final version
+- started to evolve _stubs_ (signatures, mock return values) to their final version
   - pair-programmed (PP) `keygen()` *stub*
-  - discussed *p-code* for `encode()`/`decode()`
+  - discussed _p-code_ for `encode()`/`decode()`
 
 ### next - 12/12
 
 - [ ] see: **next - 12/10** 😎
-- [ ] more specifically;  `encode()`/`decode()` to level of `key_gen` (*stub*) so UI can be completed - implementation, test and structure/documentation
+- [ ] more specifically;  `encode()`/`decode()` to level of `key_gen` (_stub_) so UI can be completed - implementation, test and structure/documentation
 
 ### references - 12/12
 
 ## 12/10
 
-- *stubs* - in this/our context - are merely function definitions (*i.e*., implementations) that allow you to make progress, *e.g.*,
-  > **reminder** - if there's a reference to a (function) - a *declaration* enables compilation, a *defintion* enables linking
+- _stubs_ - in this/our context - are merely function definitions (_i.e_., implementations) that allow you to make progress, _e.g._,
+  > **reminder** - if there's a reference to a (function) - a _declaration_ enables compilation, a _defintion_ enables linking
 
   ```C
   return_type encode(...params...) {
@@ -81,7 +96,7 @@
 - enabling compilation (declarations) and linking (definitions) are steps in the **TDD** process
 - **that's all folks**...Lesson displaceed by tickets to:
 - ![Go Hawks](https://th.bing.com/th?id=OIF.ypvcLGQKBXGC%2f2ca%2bYR5qg&rs=1&pid=ImgDetMain)
-  - **may the best team win**...*kidding*...**Go Hawks**❗❗❗
+  - **may the best team win**..._kidding_...**Go Hawks**❗❗❗
 
 ### next - 12/10
 
@@ -94,7 +109,7 @@
 
 ![Biorhythms](https://www.intmath.com/trigonometric-graphs/img/biorhythms.gif "Biorhythms")
 
-> not that I *believe* in biorhythms; but their *wave chart* works well for illustrative purposes😎
+> not that I _believe_ in biorhythms; but their _wave chart_ works well for illustrative purposes😎
 
 - fixed string comparison w/macro
 - structured `main()` to execute each command
@@ -117,18 +132,18 @@
   - new, exciting work opportunities
   - objectives (personal/pofessional) and *projects*
 - yielded:
-  - **backburnered** *projects:*  
+  - **backburnered** _projects:_  
     ~~1. **job/career**~~  
       ~~- LinkedIn~~  
         ~~- [ ] review other’s LI style to determine what’s next~~  
       ~~- resume~~  
-        ~~- [ ] resume *v.Next*~~  
+        ~~- [ ] resume _v.Next_~~  
     ~~2. **LI projects**~~  
-      ~~- [ ] review, build, *etc.*~~  
-  - **focussed** *projects:*  
+      ~~- [ ] review, build, _etc._~~  
+  - **focussed** _projects:_  
     - **otp**
         1. [ ] user interface:  
-          - design and implement (`getopt()` loop) command line args, input/output files (named and standard), *etc.*  
+          - design and implement (`getopt()` loop) command line args, input/output files (named and standard), _etc._  
         2. [ ] review (preferably in debugger) µnit's `example.c`
 
 ---
@@ -145,14 +160,14 @@
   2. **LI projects**
      - [ ] review, build, *etc.*
   3. **otp**
-      - [ ] command line args, std files and named files – convention for *standard* handles is `-`
+      - [ ] command line args, std files and named files – convention for _standard_ handles is `-`
       - [ ] spec out/implement CLA/getopt(0 loop for otp…
 
 ---
 
 ## 10/28
 
-- let's organize around three *projects*:
+- let's organize around three _projects_:
   1. **job/career**
      - LinkedIn
        - [ ] review other’s LI style to determine what’s next
@@ -180,7 +195,7 @@
 ## 10/20
 
 - feeling better about job vs. career
-- discussed LinkedIn (LI) style (too informal?) and migrating your resume’s *About Me* section to an *Objectives* section
+- discussed LinkedIn (LI) style (too informal?) and migrating your resume’s _About Me_ section to an _Objectives_ section
 - decided to stick with – and I won’t tempt you with other projects 😎 – `OTP` as it’s already a known quantity, and is written to be net-centric (client/server – C/S)  
   - as an aside, future projects – like `Huffman` – can be architected to be C/S as well
 - did a deep-ish dive into :
