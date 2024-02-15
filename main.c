@@ -1,4 +1,5 @@
 #include "otp.h"
+#include "munit/munit.h"
 
 char decode_char(char cipher_char, char key_char) {
     assert(cipher_char);
@@ -40,14 +41,13 @@ bool decode(FILE* key_fd) {
     return true;
 }
 
+//get a random number to pick 
 void get_random_numb(int length) {
-    // int i;
-    
     assert(length);
     printf("length is: %d\n", length);
 
     //initialize random number generator using time
-    srand(time(NULL));
+    srand(time(0));
 
     for (int i = 0; i < 5; i++) {
         printf("i is: %d\n", rand() % length + 1);
@@ -74,8 +74,6 @@ void usage() { //TODO
     printf("usage: ./otp... \n"); //will have all the values available
     exit(EXIT_FAILURE);
 }
-
-#include "munit/munit.h"
 
 static MunitResult
 demitrus_test_compare(const MunitParameter params[], void* data) {
