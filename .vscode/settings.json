@@ -3,5 +3,8 @@
         "activityBar.background": "#093519",
         "titleBar.activeBackground": "#0D4A22",
         "titleBar.activeForeground": "#F3FDF7"
-    }
+    },
+    "cSpell.words": [
+        "μunit"
+    ]
 }

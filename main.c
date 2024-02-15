@@ -76,6 +76,22 @@ void usage() { //TODO
 }
 
 static MunitResult
+encode_one_char(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    char plaintext_char = 'A';
+    char key_char = 'Z';
+    char expected_char = 'Q';   //expected answer
+    //action
+    char encoded_char = encode_char(plaintext_char, key_char);
+    //assert
+    munit_assert_char(encoded_char, ==, expected_char);
+
+    return MUNIT_OK; 
+} 
+
+static MunitResult
 demitrus_test_compare(const MunitParameter params[], void* data) {
   /* We'll use these later */
   const unsigned char val_uchar = 'b';
@@ -178,7 +194,8 @@ static MunitTest test_suite_tests[] = {
     /* The name is just a unique human-readable way to identify the
      * test. You can use it to run a specific test if you want, but
      * usually it's mostly decorative. */
-    (char*) "demitrus_test_compare",
+    (char*) "demitrus_test_compare", 
+
     /* You probably won't be surprised to learn that the tests are
      * functions. */
     // test_compare,
@@ -203,10 +220,11 @@ static MunitTest test_suite_tests[] = {
     MUNIT_TEST_OPTION_NONE,
     NULL
   },
+  { (char*) "encode_one_char", encode_one_char, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /* Usually this is written in a much more compact format; all these
    * comments kind of ruin that, though.  Here is how you'll usually
    * see entries written: */
-  { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+//   { (char*) "/example/rand", test_rand, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /* To tell the test runner when the array is over, just add a NULL
    * entry at the end. */
 //   { (char*) "/example/parameters", test_parameters, NULL, NULL, MUNIT_TEST_OPTION_NONE, test_params },
