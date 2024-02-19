@@ -1,4 +1,5 @@
 #include "otp.h"
+#include "munit/munit.h"
 
 char decode_char(char cipher_char, char key_char) {
     assert(cipher_char);
@@ -24,8 +25,10 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-bool encode(FILE* fd_key) { 
+bool encode(FILE* fd_key, char* plaintext_ptr) { 
     assert(fd_key);
+
+
     fprintf(stderr, "encode successfully working!\n");
     return true;
 }
@@ -40,14 +43,24 @@ bool decode(FILE* key_fd) {
     return true;
 }
 
+<<<<<<< HEAD
+int get_random_numb() { //maybe take alpha length as parameter 
+    int alpha_len = strlen(ALPHABET);
+
+    //initialize random number generator using time
+    //srand(0); //time(NULL)); //almost never wanna call srand in worker function
+    int numb = rand() % alpha_len + 1;
+    printf("numb is: %d\n", numb);
+   
+    return numb;
+=======
+//get a random number to pick 
 void get_random_numb(int length) {
-    // int i;
-    
     assert(length);
     printf("length is: %d\n", length);
 
     //initialize random number generator using time
-    srand(time(NULL));
+    srand(time(0));
 
     for (int i = 0; i < 5; i++) {
         printf("i is: %d\n", rand() % length + 1);
@@ -66,6 +79,7 @@ bool generate_key(int count, const char* alphabet, const char* plaintext) { //TO
    // char rand_char = get_random_numb(rand_numb);
     // printf("ksdfoijsdlfjskdlfji\n");
     return true; 
+>>>>>>> da0b89e3e94f52bb4e5356dec0825eb6aa2f7615
 }
 
 void usage() { //TODO
@@ -74,8 +88,6 @@ void usage() { //TODO
     printf("usage: ./otp... \n"); //will have all the values available
     exit(EXIT_FAILURE);
 }
-
-#include "munit/munit.h"
 
 static MunitResult
 encode_one_char(const MunitParameter params[], void* data) {
@@ -91,7 +103,49 @@ encode_one_char(const MunitParameter params[], void* data) {
     munit_assert_char(encoded_char, ==, expected_char);
 
     return MUNIT_OK; 
-} 
+}
+
+
+//key generation
+static MunitResult
+generate_numb(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    //srand(0); //time(NULL));
+    int static_num = 27;
+    //action
+    int num_from_fx = get_random_numb();
+    //assert
+    munit_assert_int(num_from_fx, <=, static_num);
+
+    return MUNIT_OK;
+}
+
+static MunitResult
+test_get_random(const MunitParameter params[], void* data) {
+    //arrange
+    srand(0);
+    // int alpha_len = 28;
+    int expected[] = {14, 11, 19, 8, 17};
+    
+    for (int i = 0; i < (int)(sizeof(expected)/sizeof(expected[0])); i++) {
+        //action
+        int r = get_random_numb();
+        //assert
+        munit_assert_int(expected[i], ==, r);
+    }
+
+    return MUNIT_OK;    
+}
+//expect to be positive
+//can it be zero
+
+//encode
+static MunitResult
+is_returned_char_in_alphabet(const MunitParameter params[], void* data) {
+    return MUNIT_OK;
+}
 
 static MunitResult
 demitrus_test_compare(const MunitParameter params[], void* data) {
@@ -223,6 +277,8 @@ static MunitTest test_suite_tests[] = {
     NULL
   },
   { (char*) "encode_one_char", encode_one_char, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"generate_numb", generate_numb, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"test_get_random", test_get_random, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /* Usually this is written in a much more compact format; all these
    * comments kind of ruin that, though.  Here is how you'll usually
    * see entries written: */
@@ -259,11 +315,19 @@ static const MunitSuite test_suite = {
   MUNIT_SUITE_OPTION_NONE
 };
 
+
 int main(int argc, char *argv[]) {
+    // srand(0);
+    // for(int i =0; i < 5; i++) {
+    //     int r = rand();
+    //     printf("%d, %d\n", r, r % 28);
+    // }
+    // return 0;
     int opt = 0;
     FILE* fd = NULL;
-    int char_count = 0;
+    // int char_count = 0;
     char* app_name = NULL;
+    srand(time(NULL)); //almost never wanna call srand in worker function
 
     if (argc == 1) {
         return munit_suite_main(&test_suite, (void*) "µnit", argc, argv);
@@ -304,20 +368,31 @@ int main(int argc, char *argv[]) {
     
     //here is the client/program split
     //beginning to run alogirthm 
+    char* plaintext_ptr = argv[4];
     if (app_name == NULL) {
         usage(); 
     }
     if ((IS_STR_EQUAL(app_name, "key"))) {
-        char_count = atoi(argv[optind]);
-        assert(char_count > 0);
-        if (!generate_key(char_count, ALPHABET, argv[4])) {
-            fprintf(stderr, "error generating key\n");
-            exit(EXIT_FAILURE);
+        int plaintext_len = strlen(argv[4]);
+        if (plaintext_len) { //, argv[4])) {
+            FILE* fd = fopen("key.txt", "w");
+            char* ptr_to_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            for (int i = 0; i < plaintext_len; i++) {
+                int rand_num = get_random_numb();
+                //sleep(1);
+                char rand_char = ptr_to_alphabet[rand_num];
+                fputc(rand_char, fd);
+            }
         }
+        else {
+            fprintf(stderr, "error generating key\n"); //TODO fix error handling flow
+            exit(EXIT_FAILURE);
+        }    
+        fclose(fd);
     } else {
         fd = fopen(argv[optind], "r"); //account for when no key.txt file created, aka use read and write mode 
         if (IS_STR_EQUAL("encode", app_name)) {
-            encode(fd); 
+            encode(fd, plaintext_ptr); 
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             decode(fd);
@@ -337,3 +412,18 @@ make a simple shell script
 allow execute ./otp with diff combo of cl arguments to validate its working
 extra fancy:
 run ./otp capture output > otp.txt , file with expected output then diff both files*/
+
+// // FILE* fd = fopen("key.txt", "w");
+//     for (int i = 0; i < plaintext_count; i++) {
+//         //create random number generator to obtain characters from alphabet
+//         int rand_num = get_random_numb(strlen(ALPHABET));
+//         printf("random_num is: %d\n", rand_num);
+//         assert(rand_num >= 0);
+//         //use rand_num to get random alphabet letter
+//         char random_char = ALPHABET[rand_num];
+//         assert(random_char);
+//         //write letter to file
+//         // fputc(random_char, fd);
+        
+//     }
+//     // fclose(fd);
