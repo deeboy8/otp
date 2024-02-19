@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS  += -Wall -Werror -Wextra -g3 -Wunused-parameter
+CFLAGS  += -Wall -Werror -Wextra -g3 -Wno-unused-parameter -Wno-unused-function
 SANITIZE = -fsanitize=address
 MAIN = otp
 SRCS = $(wildcard *.c) munit/munit.c 
