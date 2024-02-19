@@ -1,5 +1,19 @@
 # lesson summaries
 
+## 2/18
+
+- tweaked `Makefile` to suppress compiler warnings
+- ran some experiments (e.g., `sleep()`​) to understand why `get_random_number()​​` was returning the same number
+  - clock frequency
+- leveraged the existing `main()`​ to generate an array of expected​ (AKA _golden_, _base_, _known_) random numbers based on a known seed
+  - use alternate tools to generate known values
+- UT led us to understand the relationship between `srand()`​'s `seed​`, and the length of the `alphabet​`:
+  - `get_random_number()`​​ likely needs to be parameterized over the length of the `alphabet`
+
+### next - 2/18
+
+- oodles of UTs
+
 ## 2/9
 
 - discussed priorities/progress and being in the right _mood_ for differrent _types_ of work and taking advantage of _time-shifting_
