@@ -75,6 +75,11 @@ void usage() { //TODO
     exit(EXIT_FAILURE);
 }
 
+static void*
+test_setup(const MunitParameter params[], void* user_data) {
+  return strdup("Hello, world!");
+}
+
 static MunitResult
 encode_one_char(const MunitParameter params[], void* data) {
     (void) params;
