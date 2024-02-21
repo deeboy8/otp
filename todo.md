@@ -1,5 +1,19 @@
 # lesson summaries
 
+## 2/18
+
+- tweaked `Makefile` to suppress compiler warnings
+- ran some experiments (e.g., `sleep()`​) to understand why `get_random_number()​​` was returning the same number
+  - clock frequency
+- leveraged the existing `main()`​ to generate an array of expected​ (AKA _golden_, _base_, _known_) random numbers based on a known seed
+  - use alternate tools to generate known values
+- UT led us to understand the relationship between `srand()`​'s `seed​`, and the length of the `alphabet​`:
+  - `get_random_number()`​​ likely needs to be parameterized over the length of the `alphabet`
+
+### next - 2/18
+
+- oodles of UTs
+
 ## 2/9
 
 - discussed priorities/progress and being in the right _mood_ for differrent _types_ of work and taking advantage of _time-shifting_
@@ -14,6 +28,9 @@
 
 - using μunit's `setup()` and `teardown()` (if needed) to setup known (_expected_) `key`, `plain text` and `cipher text` values for use in UTs
 - write both _positive_ (**S**ubject **U**nder **T**est - in this case the `f()` under test - passes) and _negative_ (SUT fails...but UT still passes as failure is the _expected_ value) UTs
+
+- **Arrange, Act and Assert Pattern**: [The Three A's of Unit Testing | Rob Marshall](https://robertmarshall.dev/blog/arrange-act-and-assert-pattern-the-three-as-of-unit-testing/)
+- **Unit Testing — AAA pattern.**[Unit testing is one of the Extreme… | by Supreet Singh | Xebia Engineering Blog | Medium](https://medium.com/xebia-engineering/unit-testing-aaa-pattern-ab1c08737d53)
 
 ## 12/31
 
