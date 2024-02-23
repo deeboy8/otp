@@ -25,10 +25,10 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-bool encode(FILE* fd_key, char plaintext_char) { //do we want to encode per letter or whole message?
+bool encode(/*FILE* fd_key*/char key_char, char plaintext_char) { //do we want to encode per letter or whole message?
     assert(fd_key);
 
-    //
+    //take plaintext char and 
     fprintf(stderr, "encode successfully working!\n");
     return true;
 }
