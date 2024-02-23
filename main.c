@@ -25,10 +25,10 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-bool encode(FILE* fd_key, char* plaintext_ptr) { 
+bool encode(FILE* fd_key, char plaintext_char) { //do we want to encode per letter or whole message?
     assert(fd_key);
 
-
+    //
     fprintf(stderr, "encode successfully working!\n");
     return true;
 }
@@ -369,7 +369,10 @@ int main(int argc, char *argv[]) {
     } else {
         fd = fopen(argv[optind], "r"); //account for when no key.txt file created, aka use read and write mode 
         if (IS_STR_EQUAL("encode", app_name)) {
-            encode(fd, plaintext_ptr); 
+            for (int i = 0; plaintext_ptr[i] != '\0'; i++) {
+                encode(fd[i], plaintext_ptr[i]); 
+            }
+            
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             decode(fd);
