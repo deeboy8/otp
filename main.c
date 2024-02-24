@@ -28,6 +28,7 @@ off_t get_file_length(const char* path) {
 bool encode(FILE* fd_key, char* plaintext_ptr) { 
     assert(fd_key);
 
+    
 
     fprintf(stderr, "encode successfully working!\n");
     return true;
@@ -43,7 +44,6 @@ bool decode(FILE* key_fd) {
     return true;
 }
 
-<<<<<<< HEAD
 int get_random_numb() { //maybe take alpha length as parameter 
     int alpha_len = strlen(ALPHABET);
 
@@ -53,33 +53,6 @@ int get_random_numb() { //maybe take alpha length as parameter
     printf("numb is: %d\n", numb);
    
     return numb;
-=======
-//get a random number to pick 
-void get_random_numb(int length) {
-    assert(length);
-    printf("length is: %d\n", length);
-
-    //initialize random number generator using time
-    srand(time(0));
-
-    for (int i = 0; i < 5; i++) {
-        printf("i is: %d\n", rand() % length + 1);
-    }
-}
-
-//generation of key to be used to encode and decode plaintext
-bool generate_key(int count, const char* alphabet, const char* plaintext) { //TODO
-    assert(count >= 0);
-    assert(alphabet);
-    printf("plaintext is: %s\n", plaintext);
-    
-    //create random number generator to obtain characters from alphabet
-    //int rand_numb = 
-    get_random_numb(strlen(ALPHABET));
-   // char rand_char = get_random_numb(rand_numb);
-    // printf("ksdfoijsdlfjskdlfji\n");
-    return true; 
->>>>>>> da0b89e3e94f52bb4e5356dec0825eb6aa2f7615
 }
 
 void usage() { //TODO
@@ -138,8 +111,22 @@ test_get_random(const MunitParameter params[], void* data) {
 
     return MUNIT_OK;    
 }
+
 //expect to be positive
+static MunitResult
+is_result_positive(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    int value = 0;
+    //action
+    int result = get_random_numb();
+    //assert
+    munit_assert_int(result, >=, 0);
+}
+
 //can it be zero
+//??????
 
 //encode
 static MunitResult
@@ -269,6 +256,7 @@ static MunitTest test_suite_tests[] = {
     /* If you passed a callback for the fixture setup function, you
      * may want to pass a corresponding callback here to reverse the
      * operation. */
+
     NULL, //test_compare_tear_down,
     /* Finally, there is a bitmask for options you can pass here.  You
      * can provide either MUNIT_TEST_OPTION_NONE or 0 here to use the
@@ -279,6 +267,7 @@ static MunitTest test_suite_tests[] = {
   { (char*) "encode_one_char", encode_one_char, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"generate_numb", generate_numb, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_get_random", test_get_random, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"is_result_positive", is_result_positive, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /* Usually this is written in a much more compact format; all these
    * comments kind of ruin that, though.  Here is how you'll usually
    * see entries written: */
@@ -317,12 +306,6 @@ static const MunitSuite test_suite = {
 
 
 int main(int argc, char *argv[]) {
-    // srand(0);
-    // for(int i =0; i < 5; i++) {
-    //     int r = rand();
-    //     printf("%d, %d\n", r, r % 28);
-    // }
-    // return 0;
     int opt = 0;
     FILE* fd = NULL;
     // int char_count = 0;
