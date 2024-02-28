@@ -30,7 +30,7 @@ extern int optind;
 char decode_char(char cipher_char, char key_char);
 char encode_char(char plaintext_char, char key_char);
 off_t get_file_length(const char* path);
-bool encode(FILE* fd_key, const char* plaintext);
+bool encode(const char* key, const char* plaintext);
 bool decode(FILE* key_fd);
 // bool generate_key(int count, const char* alphabet, const char* plaintext);
 char generate_key(int plaintext_char); //, const char* alphabet); //, const char* plaintext);

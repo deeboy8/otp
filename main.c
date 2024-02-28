@@ -25,15 +25,8 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-          //const char* key
-bool encode(FILE* fd_key, const char* plaintext) { //do we want to encode per letter or whole message?
-    assert(fd_key);
-
-    //get index to which char in plaintext is located in alphabet
-
-    //get index to which char in key is located in alphabet
-    //sum indexes together % 27
-    //return 
+bool encode(const char* key, const char* plaintext) {
+    
 
     fprintf(stderr, "encode successfully working!\n");
     return true;
@@ -129,13 +122,11 @@ int main(int argc, char *argv[]) {
         int key_len = get_file_length("key.txt");
         if (IS_STR_EQUAL("encode", app_name)) {
             //read in entire key file and save to buffer
-            char fd_ptr[key_len + 1];
-            assert(fd_ptr);
-            fread(fd_ptr, sizeof(char), key_len, fd);
-            // fgets(fd_ptr, key_len, (FILE*)fd);
-            // size_t key_elements = read(fd, fd_ptr, sizeof(char) * key_len);
-            printf("key is ---> %s\n", fd_ptr);
-            // encode(, plaintext_ptr[i]); 
+            char* key_ptr[key_len + 1];
+            assert(key_ptr);
+            size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
+            assert(key_chars);
+            encode(key_ptr, plaintext_ptr); 
                         
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
