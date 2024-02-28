@@ -12,6 +12,7 @@ char decode_char(char cipher_char, char key_char) {
 char encode_char(char plaintext_char, char key_char) {
     assert(plaintext_char);
     assert(key_char);
+    //encode_char will sum both indexes and return single char to be added to memory space
     return 'x';
 }
 
@@ -25,8 +26,9 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-bool encode(const char* key, const char* plaintext) {
-    
+bool encode(const char* key, const char* plaintext) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
+    //memory space to hold ciphertext 
+    //for loop passing each char of key and plaintext to encode char
 
     fprintf(stderr, "encode successfully working!\n");
     return true;
