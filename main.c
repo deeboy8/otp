@@ -125,13 +125,14 @@ int main(int argc, char *argv[]) {
         }    
         fclose(fd);
     } else {
-        fd = fopen(argv[optind], "r"); //account for when no key.txt file created, aka use read and write mode 
+        fd = fopen("key.txt", "r"); //account for when no key.txt file created, aka use read and write mode 
         int key_len = get_file_length("key.txt");
         if (IS_STR_EQUAL("encode", app_name)) {
             //read in entire key file and save to buffer
             char fd_ptr[key_len + 1];
             assert(fd_ptr);
-            fgets(fd_ptr, key_len, fd);
+            fread(fd_ptr, sizeof(char), key_len, fd);
+            // fgets(fd_ptr, key_len, (FILE*)fd);
             // size_t key_elements = read(fd, fd_ptr, sizeof(char) * key_len);
             printf("key is ---> %s\n", fd_ptr);
             // encode(, plaintext_ptr[i]); 
