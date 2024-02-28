@@ -26,11 +26,12 @@ extern int optind;
 #define ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZ " //decoupling(?) --> offers flexibility
 #define KEYFILE "key.txt"
 #define CIPHERTEXT "ciphertext.txt"
+#define ALPHA_LEN strlen(ALPHABET)
 
 char decode_char(char cipher_char, char key_char);
 char encode_char(char plaintext_char, char key_char);
 off_t get_file_length(const char* path);
-bool encode(const char* key, const char* plaintext);
+char* encode(const char* key, const char* plaintext);
 bool decode(FILE* key_fd);
 // bool generate_key(int count, const char* alphabet, const char* plaintext);
 char generate_key(int plaintext_char); //, const char* alphabet); //, const char* plaintext);

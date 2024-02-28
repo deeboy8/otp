@@ -9,11 +9,13 @@ char decode_char(char cipher_char, char key_char) {
 
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
 //should I make this function one that can encode and decode --> seems wise
-char encode_char(char plaintext_char, char key_char) {
+char encode_char(char key_char, char plaintext_char) {
     assert(plaintext_char);
     assert(key_char);
     //encode_char will sum both indexes and return single char to be added to memory space
-    return 'x';
+    int index_sum = (int)key_char % ALPHA_LEN + (int)plaintext_char % ALPHA_LEN;
+    char cipher_char = ALPHABET[index_sum];
+    return cipher_char;
 }
 
 off_t get_file_length(const char* path) {
@@ -26,15 +28,19 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-bool encode(const char* key, const char* plaintext) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
-    //memory space to hold ciphertext 
+char* encode(const char* key, const char* plaintext) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
+    //memory space to hold ciphertext
+    char* ciphertext = ec[strlen(ALPHABET) + 1];
     //for loop passing each char of key and plaintext to encode char
+    for (int i = 0; i < ALPHA_LEN; i++) {
+        ec[i] = encode_char(key[i], plaintext[i]);
+    }
 
     fprintf(stderr, "encode successfully working!\n");
-    return true;
+    return ciphertext;
 }
 
-//create ciphetext --> original message
+//create ciphertext --> original message
 bool decode(FILE* key_fd) {
     assert(key_fd);
     printf("decode successful\n");
@@ -66,7 +72,6 @@ int main(int argc, char *argv[]) {
     FILE* fd = NULL;
     // int char_count = 0;
     char* app_name = NULL;
-    int alpha_len = strlen(ALPHABET);
     srand(0); 
 
     //why can't it see the test_suite fx in the other file 
@@ -109,7 +114,7 @@ int main(int argc, char *argv[]) {
             FILE* fd = fopen("key.txt", "w");
             char* ptr_to_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
             for (int i = 0; i < plaintext_len; i++) {
-                int rand_num = get_random_numb(alpha_len);
+                int rand_num = get_random_numb(ALPHA_LEN);
                 char rand_char = ptr_to_alphabet[rand_num];
                 fputc(rand_char, fd);
             }
@@ -124,10 +129,11 @@ int main(int argc, char *argv[]) {
         int key_len = get_file_length("key.txt");
         if (IS_STR_EQUAL("encode", app_name)) {
             //read in entire key file and save to buffer
-            char* key_ptr[key_len + 1];
+            char* key_ptr[key_len + 1]; // = {'\0'};
             assert(key_ptr);
             size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
             assert(key_chars);
+            // key_ptr[key_len + 1] = '\0';
             encode(key_ptr, plaintext_ptr); 
                         
         }
