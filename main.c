@@ -9,13 +9,16 @@ char decode_char(char cipher_char, char key_char) {
 
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
 //should I make this function one that can encode and decode --> seems wise
-char encode_char(char key_char, char plaintext_char) {
-    assert(plaintext_char);
-    assert(key_char);
+//UT -> use example in PDF, write UTs around that-> null character pass -> diff alphabet 
+char encode_char(char key_char, char plaintext_char, const char* alphabet, size_t alpha_length) { //pure fx in TDD sense; parameterize ALPHABET
+    // assert(key_char); assert are typically used for boolean expression or ptrs
+    assert(alphabet); //-> assert alphabet not equal to null; assert its not zero
+    assert(alpha_length == strlen(alphabet));
+    assert(alphabet[0] >= plaintext_char && plaintext_char <= alphabet[alpha_length - 1] );
     // char x = key_char;
     //encode_char will sum both indexes and return single char to be added to memory space
-    int index_sum = (int)key_char % ALPHA_LEN + (int)plaintext_char % ALPHA_LEN;
-    char cipher_char = ALPHABET[index_sum];
+    int index_sum = (int)key_char % alpha_length + (int)plaintext_char % alpha_length; 
+    char cipher_char = alphabet[index_sum]; //not a pure fx, CAN'T USE WITH ANOTEHR ALPHABET, pass ptr to alphabet (const char*)
     return cipher_char;
 }
 
@@ -29,19 +32,19 @@ off_t get_file_length(const char* path) {
     return -1;
 }
 
-char* encode(const char* key, const char* plaintext) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
-    printf("key is: %s\n", key);
-    printf("plaintext is: %s\n", plaintext);
-    
+char* encode(const char* key, const char* plaintext, const char* alphabet, size_t alpha_length) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
+    //putting IO in fx intended for computation makes useless for any other user
+    //use fprintf(stderr, ....)
+    // VARIABLE LENGTH ARGUMENTS -> FUTURE DISCUSSION
+    //add macro asserts to test parameters
     size_t i = 0;
     //memory space to hold ciphertext
     char* cipher = malloc(sizeof(char) * strlen(plaintext) + 1); //ec[strlen(ALPHABET) + 1];
     //for loop passing each char of key and plaintext to encode char
     for (i = 0; i < strlen(plaintext); i++) {
-        cipher[i] = encode_char(key[i], plaintext[i]);
+        cipher[i] = encode_char(key[i], plaintext[i], alphabet, alpha_length);
     }
     cipher[i] = '\0';
-    printf("ciphertext is: %s\n", cipher);
 
     return cipher;
 }
@@ -137,7 +140,7 @@ int main(int argc, char *argv[]) {
             size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
             // key_ptr[key_len + 1] = '\0';
             assert(key_chars);
-            encode(key_ptr, plaintext_ptr); 
+            encode(key_ptr, plaintext_ptr, ALPHABET, ALPHA_LEN); 
                         
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
