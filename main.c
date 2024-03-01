@@ -12,6 +12,7 @@ char decode_char(char cipher_char, char key_char) {
 char encode_char(char key_char, char plaintext_char) {
     assert(plaintext_char);
     assert(key_char);
+    // char x = key_char;
     //encode_char will sum both indexes and return single char to be added to memory space
     int index_sum = (int)key_char % ALPHA_LEN + (int)plaintext_char % ALPHA_LEN;
     char cipher_char = ALPHABET[index_sum];
@@ -29,15 +30,20 @@ off_t get_file_length(const char* path) {
 }
 
 char* encode(const char* key, const char* plaintext) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
+    printf("key is: %s\n", key);
+    printf("plaintext is: %s\n", plaintext);
+    
+    size_t i = 0;
     //memory space to hold ciphertext
-    char* ciphertext = ec[strlen(ALPHABET) + 1];
+    char* cipher = malloc(sizeof(char) * strlen(plaintext) + 1); //ec[strlen(ALPHABET) + 1];
     //for loop passing each char of key and plaintext to encode char
-    for (int i = 0; i < ALPHA_LEN; i++) {
-        ec[i] = encode_char(key[i], plaintext[i]);
+    for (i = 0; i < strlen(plaintext); i++) {
+        cipher[i] = encode_char(key[i], plaintext[i]);
     }
+    cipher[i] = '\0';
+    printf("ciphertext is: %s\n", cipher);
 
-    fprintf(stderr, "encode successfully working!\n");
-    return ciphertext;
+    return cipher;
 }
 
 //create ciphertext --> original message
@@ -126,11 +132,11 @@ int main(int argc, char *argv[]) {
         int key_len = get_file_length("key.txt");
         if (IS_STR_EQUAL("encode", app_name)) {
             //read in entire key file and save to buffer
-            char* key_ptr[key_len + 1]; // = {'\0'};
+            char key_ptr[key_len + 1]; // = {'\0'};
             assert(key_ptr);
             size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
-            assert(key_chars);
             // key_ptr[key_len + 1] = '\0';
+            assert(key_chars);
             encode(key_ptr, plaintext_ptr); 
                         
         }
