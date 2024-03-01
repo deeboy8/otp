@@ -58,9 +58,6 @@ void usage() { //TODO
     exit(EXIT_FAILURE);
 }
 
-
-
-
 int main(int argc, char *argv[]) {
     int opt = 0;
     FILE* fd = NULL;
