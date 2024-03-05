@@ -7,6 +7,19 @@ char decode_char(char cipher_char, char key_char) {
     return 'm';
 }
 
+int get_char_index(char text_char, const char* alphabet, size_t alpha_length) {
+    int value;
+
+    for (int i = 0; i < (int)alpha_length; i++) {
+        if (IS_STR_EQUAL(&text_char, &alphabet[i])) {
+            value = i;
+        }
+    }
+    // fprintf(stderr, "error: no value for char\n");
+
+    return value;
+}
+
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
 //should I make this function one that can encode and decode --> seems wise
 //UT -> use example in PDF, write UTs around that-> null character pass -> diff alphabet 
@@ -14,11 +27,15 @@ char encode_char(char key_char, char plaintext_char, const char* alphabet, size_
     // assert(key_char); assert are typically used for boolean expression or ptrs
     assert(alphabet); //-> assert alphabet not equal to null; assert its not zero
     assert(alpha_length == strlen(alphabet));
-    assert(alphabet[0] >= plaintext_char && plaintext_char <= alphabet[alpha_length - 1] );
+    // assert(alphabet[0] <= plaintext_char && plaintext_char >= alphabet[26]); //no -1 to ensure it's a char; alphabet[alpah_length -1] == ' ' aka ascii 32
     // char x = key_char;
     //encode_char will sum both indexes and return single char to be added to memory space
-    int index_sum = (int)key_char % alpha_length + (int)plaintext_char % alpha_length; 
-    char cipher_char = alphabet[index_sum]; //not a pure fx, CAN'T USE WITH ANOTEHR ALPHABET, pass ptr to alphabet (const char*)
+    
+    int key_index = get_char_index(key_char, alphabet, alpha_length);
+    int plaintext_index = get_char_index(plaintext_char, alphabet, alpha_length);
+    
+    int sum_of_indexes = (key_index + plaintext_index) % alpha_length;
+    char cipher_char = alphabet[sum_of_indexes]; //not a pure fx, CAN'T USE WITH ANOTEHR ALPHABET, pass ptr to alphabet (const char*)
     return cipher_char;
 }
 
@@ -45,6 +62,7 @@ char* encode(const char* key, const char* plaintext, const char* alphabet, size_
         cipher[i] = encode_char(key[i], plaintext[i], alphabet, alpha_length);
     }
     cipher[i] = '\0';
+    printf("ciphertext: %s\n", cipher);
 
     return cipher;
 }
@@ -137,7 +155,7 @@ int main(int argc, char *argv[]) {
             //read in entire key file and save to buffer
             char key_ptr[key_len + 1]; // = {'\0'};
             assert(key_ptr);
-            size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
+            size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd); //register rdi is not available
             // key_ptr[key_len + 1] = '\0';
             assert(key_chars);
             encode(key_ptr, plaintext_ptr, ALPHABET, ALPHA_LEN); 
