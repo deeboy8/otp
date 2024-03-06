@@ -1,5 +1,31 @@
 # lesson summaries
 
+## 3/1
+
+- discussed the concept of *parameterization* and how it is **exteremely** important to *reusability*, *testability*, *etc.*
+- reviewed the `assert()` *macro* and how it accepts any `boolean` expression
+  - this led to a discussion on *style* and how I try to represent *ranges* similiar to how they would be represented mathematically:  
+      `low <= value && value < high`  
+      compared to  
+      $low \le value \lt high$
+- concluded w/a discussion on *pure* `f()`-s - and how they don't reference *anything* outside of their *scope* - **no side-effects** (*e.g.*, global vars), *including* `I/O`
+
+  > If a program doesn't modify its output, there will be no evidence that it ran.  
+  > Clifford Schaeffer (I think😎)
+
+### next - 3/1
+
+- UTs for `encode()` & `encode_char()`
+- review references in prep for writing `variadic` *functions* and *macros*
+
+### references - 3/1
+
+- [assert - cppreference.com](https://en.cppreference.com/w/c/error/assert)
+- [Variadic functions - cppreference.com](https://en.cppreference.com/w/c/variadic)
+- [Replacing text macros - cppreference.com](https://en.cppreference.com/w/c/preprocessor/replace)
+- [C Language Tutorial => Variable arguments](https://riptutorial.com/c/topic/455/variable-arguments)
+- [C Language Tutorial => Variadic arguments macro](https://riptutorial.com/c/example/18583/variadic-arguments-macro)
+
 ## 2/25
 
 - restructured code to expose `test_suite` amid a discussion on [storage-class specifiers](https://en.cppreference.com/w/c/language/storage_duration) - `extern` and `static`
