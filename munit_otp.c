@@ -1,6 +1,74 @@
 #include "munit/munit.h"
 #include "otp.h"
 
+///////////////////////////
+//encode_char
+static MunitResult
+test_otp_example(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    char letter = 'D';
+    char key_char = 'X';
+    char plaintext_char = 'H';
+    char* new_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+    //action
+    char result = encode_char(plaintext_char, key_char, new_alphabet, ALPHA_LEN);
+    //assert 
+    munit_assert_char(result, ==, letter);
+
+    return MUNIT_OK;
+}
+
+//use different alphabet
+static MunitResult
+test_different_alphabet(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    char letter = 'E';
+    char key_char = 'X';
+    char plaintext_char = 'H';
+    char* new_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //action
+    char result = encode_char(plaintext_char, key_char, new_alphabet, strlen(new_alphabet));
+    //assert 
+    munit_assert_char(result, ==, letter);
+
+    return MUNIT_OK;
+}
+
+//use numbers instead of chars
+static MunitResult
+test_different_alpha_len(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    char letter = 'E';
+    char key_char = 'X';
+    char plaintext_char = 'H';
+    int new_alpha_len = 20;
+    //action
+    char result = encode_char(plaintext_char, key_char, ALPHABET, new_alpha_len);
+    //assert
+    munit_assert_char(result, !=, letter);
+
+    return MUNIT_OK;
+}
+//test with numbers 
+//use negative numbers 
+//
+
+
+
+
+
+
+
+
+
+//////////////////////////
+
 static MunitResult
 encode_one_char(const MunitParameter params[], void* data) {
     (void) params;
@@ -10,7 +78,7 @@ encode_one_char(const MunitParameter params[], void* data) {
     char key_char = 'Z';
     char expected_char = 'Q'; //expected answer
     //action
-    char encoded_char = encode_char(plaintext_char, key_char);
+    char encoded_char = encode_char(plaintext_char, key_char, ALPHABET, ALPHA_LEN);
     //assert
     munit_assert_char(encoded_char, ==, expected_char);
 
@@ -242,7 +310,11 @@ static MunitTest test_suite_tests[] = {
      * defaults. */
     MUNIT_TEST_OPTION_NONE,
     NULL
-  },
+  }, 
+//   {"test_using_numbers", test_using_numbers, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"test_different_alpha_len", test_different_alpha_len, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"test_different_alphabet", test_different_alphabet, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  {"test_otp_example", test_otp_example, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL  },  
   {"numb_greater_than_zero", numb_greater_than_zero, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /*{ (char*) "encode_one_char", encode_one_char, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },*/
   {"numb_less_than_alpha_length", numb_less_than_alpha_length, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },

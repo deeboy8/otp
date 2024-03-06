@@ -8,16 +8,16 @@ char decode_char(char cipher_char, char key_char) {
 }
 
 int get_char_index(char text_char, const char* alphabet, size_t alpha_length) {
-    int value;
+    // int value;
 
     for (int i = 0; i < (int)alpha_length; i++) {
-        if (IS_STR_EQUAL(&text_char, &alphabet[i])) {
-            value = i;
+        if (text_char == alphabet[i]) {
+            return i;
         }
     }
     // fprintf(stderr, "error: no value for char\n");
 
-    return value;
+    return -1;
 }
 
 //will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
@@ -26,16 +26,15 @@ int get_char_index(char text_char, const char* alphabet, size_t alpha_length) {
 char encode_char(char key_char, char plaintext_char, const char* alphabet, size_t alpha_length) { //pure fx in TDD sense; parameterize ALPHABET
     // assert(key_char); assert are typically used for boolean expression or ptrs
     assert(alphabet); //-> assert alphabet not equal to null; assert its not zero
-    assert(alpha_length == strlen(alphabet));
+    // assert(alpha_length == strlen(alphabet));
     // assert(alphabet[0] <= plaintext_char && plaintext_char >= alphabet[26]); //no -1 to ensure it's a char; alphabet[alpah_length -1] == ' ' aka ascii 32
-    // char x = key_char;
-    //encode_char will sum both indexes and return single char to be added to memory space
     
     int key_index = get_char_index(key_char, alphabet, alpha_length);
     int plaintext_index = get_char_index(plaintext_char, alphabet, alpha_length);
     
     int sum_of_indexes = (key_index + plaintext_index) % alpha_length;
     char cipher_char = alphabet[sum_of_indexes]; //not a pure fx, CAN'T USE WITH ANOTEHR ALPHABET, pass ptr to alphabet (const char*)
+    
     return cipher_char;
 }
 
@@ -54,6 +53,7 @@ char* encode(const char* key, const char* plaintext, const char* alphabet, size_
     //use fprintf(stderr, ....)
     // VARIABLE LENGTH ARGUMENTS -> FUTURE DISCUSSION
     //add macro asserts to test parameters
+
     size_t i = 0;
     //memory space to hold ciphertext
     char* cipher = malloc(sizeof(char) * strlen(plaintext) + 1); //ec[strlen(ALPHABET) + 1];
