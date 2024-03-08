@@ -55,7 +55,23 @@ test_different_alpha_len(const MunitParameter params[], void* data) {
 
     return MUNIT_OK;
 }
-//test with numbers 
+
+//test with numbers
+static MunitResult
+test_with_numbers_instead_of_chars(const MunitParameter params[], void* data) {
+    (void) params;
+    (void) data;
+    //arrange
+    int value1 = 12;
+    int value2 = 3;
+    //action
+    char result = encode_char(value1, value2, ALPHABET, ALPHA_LEN);
+    //assert 
+    munit_assert_false(result);
+
+    return MUNIT_OK;
+}
+
 //use negative numbers 
 //
 
@@ -283,7 +299,7 @@ static MunitTest test_suite_tests[] = {
   {
     /* The name is just a unique human-readable way to identify the
      * test. You can use it to run a specific test if you want, but
-     * usually it's mostly decorative. */
+     * usually it's mostly decorative. 
     (char*) "demitrus_test_compare", 
 
     /* You probably won't be surprised to learn that the tests are
@@ -310,8 +326,8 @@ static MunitTest test_suite_tests[] = {
      * defaults. */
     MUNIT_TEST_OPTION_NONE,
     NULL
-  }, 
-//   {"test_using_numbers", test_using_numbers, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
+  }, */
+  {"test_with_numbers_instead_of_chars", test_with_numbers_instead_of_chars, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_different_alpha_len", test_different_alpha_len, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_different_alphabet", test_different_alphabet, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_otp_example", test_otp_example, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL  },  

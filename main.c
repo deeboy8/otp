@@ -20,44 +20,37 @@ int get_char_index(char text_char, const char* alphabet, size_t alpha_length) {
     return -1;
 }
 
-//will take char from each file (key and plaintext) and the corresponding encoded char aka 'x'
+
 //should I make this function one that can encode and decode --> seems wise
-//UT -> use example in PDF, write UTs around that-> null character pass -> diff alphabet 
-char encode_char(char key_char, char plaintext_char, const char* alphabet, size_t alpha_length) { //pure fx in TDD sense; parameterize ALPHABET
-    // assert(key_char); assert are typically used for boolean expression or ptrs
-    assert(alphabet); //-> assert alphabet not equal to null; assert its not zero
+char encode_char(char key_char, char plaintext_char, const char* alphabet, size_t alpha_length) {
+    assert(alphabet); 
     // assert(alpha_length == strlen(alphabet));
     // assert(alphabet[0] <= plaintext_char && plaintext_char >= alphabet[26]); //no -1 to ensure it's a char; alphabet[alpah_length -1] == ' ' aka ascii 32
+
+    if (sizeof(key_char) != sizeof(char) || sizeof(plaintext_char) != sizeof(char)) {
+        return false;
+    }
     
     int key_index = get_char_index(key_char, alphabet, alpha_length);
     int plaintext_index = get_char_index(plaintext_char, alphabet, alpha_length);
     
     int sum_of_indexes = (key_index + plaintext_index) % alpha_length;
-    char cipher_char = alphabet[sum_of_indexes]; //not a pure fx, CAN'T USE WITH ANOTEHR ALPHABET, pass ptr to alphabet (const char*)
+    char cipher_char = alphabet[sum_of_indexes]; 
     
     return cipher_char;
 }
 
-off_t get_file_length(const char* path) {
-    struct stat statbuf;
-    if (stat(path, &statbuf) == 0) {
-        return statbuf.st_size;
-    }
-    fprintf(stderr, "failure to access file\n");
-    
-    return -1;
-}
-
-char* encode(const char* key, const char* plaintext, const char* alphabet, size_t alpha_length) { //should return char* of malloc'd space holding ciphertext to be senet to stdout
-    //putting IO in fx intended for computation makes useless for any other user
-    //use fprintf(stderr, ....)
-    // VARIABLE LENGTH ARGUMENTS -> FUTURE DISCUSSION
-    //add macro asserts to test parameters
+//generate ciphertext on heap and returned via char*
+char* encode(const char* key, const char* plaintext, const char* alphabet, size_t alpha_length) { 
+    assert(key);
+    assert(plaintext);
+    assert(alphabet);
+    assert(alpha_length > 0);
 
     size_t i = 0;
-    //memory space to hold ciphertext
+    //buffer space to hold generated ciphertext
     char* cipher = malloc(sizeof(char) * strlen(plaintext) + 1); //ec[strlen(ALPHABET) + 1];
-    //for loop passing each char of key and plaintext to encode char
+    //pass each char of key and plaintext to encode_char
     for (i = 0; i < strlen(plaintext); i++) {
         cipher[i] = encode_char(key[i], plaintext[i], alphabet, alpha_length);
     }
@@ -94,11 +87,10 @@ void usage() { //TODO
 int main(int argc, char *argv[]) {
     int opt = 0;
     FILE* fd = NULL;
-    // int char_count = 0;
     char* app_name = NULL;
-    srand(0); 
+    srand(0);
 
-    //why can't it see the test_suite fx in the other file 
+    //run unit tests 
     if (argc == 1) {
         return munit_suite_main(&test_suite, (void*) "µnit", argc, argv);
     }
@@ -126,22 +118,26 @@ int main(int argc, char *argv[]) {
             usage();
         }
     }
-    
-    char* plaintext_ptr = argv[4];
-    assert(plaintext_ptr);
+
     if (app_name == NULL) {
         usage(); 
     }
+
+    char* plaintext_ptr = argv[4];
+    assert(plaintext_ptr);
     if ((IS_STR_EQUAL(app_name, "key"))) {
         int plaintext_len = strlen(argv[4]);
-        if (plaintext_len) { //, argv[4])) {
+        if (plaintext_ptr) {
             FILE* fd = fopen("key.txt", "w");
             char* ptr_to_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
             for (int i = 0; i < plaintext_len; i++) {
+                //obtain random number between 0 and length of plaintext messsage
                 int rand_num = get_random_numb(ALPHA_LEN);
+                //index random char from alphabet to create key.txt 
                 char rand_char = ptr_to_alphabet[rand_num];
                 fputc(rand_char, fd);
             }
+            fputc('\n', fd); //////IS THIS THE BEST CHOICE FOR ADDING TEXT TO FILE?
         }
         else {
             fprintf(stderr, "error generating key\n"); //TODO fix error handling flow
@@ -149,12 +145,16 @@ int main(int argc, char *argv[]) {
         }    
         fclose(fd);
     } else {
-        fd = fopen("key.txt", "r"); //account for when no key.txt file created, aka use read and write mode 
+        fd = fopen("key.txt", "r"); 
+        if (!fd) {
+            fprintf(stderr, "error: must generate a key file\n");
+            exit(EXIT_FAILURE);
+        }
         int key_len = get_file_length("key.txt");
         if (IS_STR_EQUAL("encode", app_name)) {
             //read in entire key file and save to buffer
-            char key_ptr[key_len + 1]; // = {'\0'};
-            assert(key_ptr);
+            char key_ptr[key_len + 1]; // = {'\0'}; ////////////////////CAN I NOT DO THIS BECAUSE THE SPACE IS COMPUTATED AT COMPILE TIME?
+            assert(key_ptr); //////////THIS ISN'T VALID YES?
             size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd); //register rdi is not available
             // key_ptr[key_len + 1] = '\0';
             assert(key_chars);
