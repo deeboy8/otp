@@ -26,6 +26,7 @@ bool decode(const char* key, const char* ciphertext, const char* alphabet, size_
     for (i = 0; i < strlen(ciphertext); i++) {
         plaintext_new[i] = decode_char(key[i], ciphertext[i], alphabet, alpha_length);
     }
+    
     return true;
 }
 
