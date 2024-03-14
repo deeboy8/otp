@@ -28,11 +28,11 @@ extern int optind;
 #define CIPHERTEXT "ciphertext.txt"
 #define ALPHA_LEN strlen(ALPHABET)
 
-char decode_char(char cipher_char, char key_char);
+char decode_char(char key_char, char ciphertext_char, const char* alphabet, size_t alpha_length);
 char encode_char(char plaintext_char, char key_char, const char* alphabet, size_t alpha_length);
 off_t get_file_length(const char* path);
 char* encode(const char* key, const char* plaintext, const char* alphabet, size_t alpha_length);
-bool decode(FILE* key_fd);
+bool decode(const char* key, const char* ciphertext, const char* alphabet, size_t alpha_length);
 // bool generate_key(int count, const char* alphabet, const char* plaintext);
 char generate_key(int plaintext_char); //, const char* alphabet); //, const char* plaintext);
 int get_random_numb(int alpha_len);

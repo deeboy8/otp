@@ -4,7 +4,7 @@
 ///////////////////////////
 //encode_char
 static MunitResult
-test_otp_example(const MunitParameter params[], void* data) {
+test_ot_pdf_example_passes(const MunitParameter params[], void* data) {
     (void) params;
     (void) data;
     //arrange
@@ -19,6 +19,9 @@ test_otp_example(const MunitParameter params[], void* data) {
 
     return MUNIT_OK;
 }
+
+// static MunitResult
+// test_otp_pdf_example_fails(const MunitParameter params[], void* data) {};
 
 //use different alphabet
 static MunitResult
@@ -73,7 +76,8 @@ test_with_numbers_instead_of_chars(const MunitParameter params[], void* data) {
 }
 
 //use negative numbers 
-//
+//ensure char for key and plaintext fall within range of capitalized letters ->invalid values
+// same but works
 
 
 
@@ -296,17 +300,16 @@ demitrus_test_compare(const MunitParameter params[], void* data) {
 }
 
 static MunitTest test_suite_tests[] = {
-  {
-    /* The name is just a unique human-readable way to identify the
+  /*{  The name is just a unique human-readable way to identify the
      * test. You can use it to run a specific test if you want, but
      * usually it's mostly decorative. 
-    (char*) "demitrus_test_compare", 
+    (char*) "demitrus_test_compare", */
 
     /* You probably won't be surprised to learn that the tests are
-     * functions. */
+     * functions. 
     // test_compare,
     demitrus_test_compare, 
-    /* If you want, you can supply a function to set up a fixture.  If
+    If you want, you can supply a function to set up a fixture.  If
      * you supply NULL, the user_data parameter from munit_suite_main
      * will be used directly.  If, however, you provide a callback
      * here the user_data parameter will be passed to this callback,
@@ -314,23 +317,23 @@ static MunitTest test_suite_tests[] = {
      * test function.
      *
      * For our example we don't really need a fixture, but lets
-     * provide one anyways. */
+     * provide one anyways. 
     NULL, //test_compare_setup, //run before every UT, then teardown would run after execution of UT !!!!!!!!!!!
-    /* If you passed a callback for the fixture setup function, you
+     If you passed a callback for the fixture setup function, you
      * may want to pass a corresponding callback here to reverse the
-     * operation. */
-
+     * operation. 
+     * 
     NULL, //test_compare_tear_down,
-    /* Finally, there is a bitmask for options you can pass here.  You
+     Finally, there is a bitmask for options you can pass here.  You
      * can provide either MUNIT_TEST_OPTION_NONE or 0 here to use the
-     * defaults. */
+     * defaults. 
     MUNIT_TEST_OPTION_NONE,
     NULL
-  }, */
+  },*/
   {"test_with_numbers_instead_of_chars", test_with_numbers_instead_of_chars, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_different_alpha_len", test_different_alpha_len, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   {"test_different_alphabet", test_different_alphabet, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL },
-  {"test_otp_example", test_otp_example, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL  },  
+  {"test_ot_pdf_example_passes", test_ot_pdf_example_passes, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL  },  
   {"numb_greater_than_zero", numb_greater_than_zero, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },
   /*{ (char*) "encode_one_char", encode_one_char, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },*/
   {"numb_less_than_alpha_length", numb_less_than_alpha_length, test_setup, NULL, MUNIT_TEST_OPTION_NONE, NULL },
