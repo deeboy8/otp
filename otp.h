@@ -23,7 +23,8 @@ extern int optind;
 
 // macros operate on replacement
 #define IS_STR_EQUAL(str1, str2) (strcmp(str1, str2) == 0)
-#define ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZ " //
+// #define ALPHABET "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 
+#define ALPHABET "ZYXWVUTSRQPONMLKJIHGFEDCBA" 
 #define KEYFILE "key.txt"
 #define CIPHERTEXT "ciphertext.txt"
 #define ALPHA_LEN strlen(ALPHABET)
@@ -36,6 +37,7 @@ bool decode(const char* key, const char* ciphertext, const char* alphabet, size_
 // bool generate_key(int count, const char* alphabet, const char* plaintext);
 char generate_key(int plaintext_char); //, const char* alphabet); //, const char* plaintext);
 int get_random_numb(int alpha_len);
+int get_char_index(char text_char, const char* alphabet, size_t alpha_length);
 
 
 #endif 
