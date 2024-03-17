@@ -19,7 +19,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/otp",
-            "args": ["-a", "decode", "SATURDAY"],
+            "args": ["-a", "encode", "SAT"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

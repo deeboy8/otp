@@ -36,13 +36,13 @@ bool decode(const char* key, const char* ciphertext, const char* alphabet, size_
     assert(ciphertext);
     assert(alphabet);
     assert(alpha_length > 0);
-    assert(strlen(key) >= strlen(ciphertext));
+    // assert(strlen(key) >= strlen(ciphertext));
 
     size_t cipher_len = strlen(ciphertext);
     size_t i = 0;
     //buffer space to hold result of ciphertext back to original plaintext message
     char* plaintext_new = malloc(sizeof(char) * cipher_len + 1);
-    for (i = 0; i < cipher_len; i++) {
+    for (i = 0; ciphertext[i] != '\0'; i++) {
         plaintext_new[i] = decode_char(key[i], ciphertext[i], alphabet, alpha_length);
     }
     plaintext_new[i] = '\0';
@@ -71,14 +71,15 @@ char* encode(const char* key, const char* plaintext, const char* alphabet, size_
     assert(plaintext);
     assert(alphabet);
     assert(alpha_length > 0);
-    assert(strlen(key) >= strlen(plaintext));
+    // assert(strlen(key) >= strlen(plaintext));
 
     FILE* fd_cipher = fopen("ciphertext.txt", "w");
+    int len_plaintext = strlen(plaintext);
     size_t i = 0;
     //buffer space to hold generated ciphertext
-    char* cipher = malloc(sizeof(char) * strlen(plaintext) + 1);//TODO -> CHANGE TO STACK MEM 
+    char* cipher = malloc(sizeof(char) * len_plaintext + 1);//TODO -> CHANGE TO STACK MEM 
     //pass each char of key and plaintext to encode_char
-    for (i = 0; i < strlen(plaintext); i++) {
+    for (i = 0; plaintext[i] != '\0'; i++) {
         cipher[i] = encode_char(key[i], plaintext[i], alphabet, alpha_length);
         fputc(cipher[i], fd_cipher);
     }
@@ -168,12 +169,7 @@ int main(int argc, char *argv[]) {
         else {
             fprintf(stderr, "error generating key\n"); //TODO fix error handling flow
             exit(EXIT_FAILURE);
-        }    
-        // fclose(fd);
-        // for (int i = 0; i < plaintext_len; i++) {
-            // fprintf(stdout, "%s\n", *rand_char);
-        // }
-        
+        }        
     } else {
         fd = fopen("key.txt", "r"); 
         if (!fd) {
@@ -182,33 +178,27 @@ int main(int argc, char *argv[]) {
         }
         //read in entire key file and save to buffer
         int key_len = get_file_length("key.txt");
-        char key_ptr[key_len + 1]; 
-        key_chars = fread(key_ptr, sizeof(char), key_len, fd);
+        // char key_ptr[key_len + 1];
+        char key_ptr[key_len];
+        memset(key_ptr, '\0', key_len);
+        key_chars = fread(key_ptr, sizeof(char), key_len - 1, fd);
         assert(key_chars != 0);
-        // char* ciphertext = NULL;
         if (IS_STR_EQUAL("encode", app_name)) {
-            // //read in entire key file and save to buffer
-            // char key_ptr[key_len + 1]; // = {'\0'}; ////////////////////CAN I NOT DO THIS BECAUSE THE SPACE IS COMPUTATED AT COMPILE TIME? ----> USE MEMSET!
-            // assert(key_ptr); //////////THIS ISN'T VALID YES?
-            // size_t key_chars = fread(key_ptr, sizeof(char), key_len, fd);
-            // // key_ptr[key_len + 1] = '\0';
-            // assert(key_chars);
             ciphertext = encode(key_ptr, plaintext_ptr, ALPHABET, ALPHA_LEN);
         }
         else if (IS_STR_EQUAL("decode", app_name)) {
             FILE* fd_cipher = fopen("ciphertext.txt", "r");
             FILE* fd_key = fopen("key.txt", "r");
-            int key_len = get_file_length("key.txt");
-            char key_ptr[key_len];
-            int ciphertext_len = get_file_length("ciphertext.txt");
-            printf("length is: %d\n", ciphertext_len);
+            int key_len = get_file_length("key.txt"); //len = 9
+            char key_ptr_2[key_len];
+            memset(key_ptr_2, '\0', key_len);
+            int ciphertext_len = get_file_length("ciphertext.txt"); //len = 8
             char cipher_ptr[ciphertext_len];
-            key_chars = fread(key_ptr, sizeof(char), key_len, fd_key);
+            memset(cipher_ptr, '\0', ciphertext_len);
+            key_chars = fread(key_ptr_2, sizeof(char), key_len, fd_key);
             size_t cipher_chars = fread(cipher_ptr, sizeof(char), ciphertext_len, fd_cipher);
-            printf("the number of chars read in from ciphertext.txt is: %zu\n", cipher_chars);
-            printf("chars inside ciphertext.txt is: %s\n", cipher_ptr);
             assert(cipher_chars > 0);
-            decode(key_ptr, cipher_ptr, ALPHABET, ALPHA_LEN);
+            decode(key_ptr_2, cipher_ptr, ALPHABET, ALPHA_LEN);
             fclose(fd_cipher);
             fclose(fd_key);
         } else {
