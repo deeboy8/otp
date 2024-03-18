@@ -1,5 +1,67 @@
 # lesson summaries
 
+## 3/15
+
+- over the past two Lessons, we:
+  - reviewed/discussed UTs - reuse, layered - *e.g.*, `encode()​`'s UTs using `encode_char()`'s​ UTs
+  - although we couldn't remember the precise **need**, we discussed variadic f()​-s (`<stdarg.h>`...`va_start` and friends and macros​ (`__VA_ARGS__`, `__VA_OPT__​`):
+    - [Replacing text macros - cppreference.com](https://en.cppreference.com/w/cpp/preprocessor/replace)
+    - [vprintf, vfprintf, vsprintf, vsnprintf, vprintf_s, vfprintf_s, vsprintf_s, vsnprintf_s - cppreference.com](https://en.cppreference.com/w/c/io/vfprintf)
+  - try and understand (e.g., in a debugger...single-step...) the example code from the latter:
+
+    ```C
+    #include <stdio.h>
+    #include <stdarg.h>
+    #include <time.h>
+    
+    void debug_log(const char *fmt, ...)
+    {
+        struct timespec ts;
+        timespec_get(&ts, TIME_UTC);
+        char time_buf[100];
+        size_t rc = strftime(time_buf, sizeof time_buf, "%D %T", gmtime(&ts.tv_sec));
+        snprintf(time_buf + rc, sizeof time_buf - rc, ".%06ld UTC", ts.tv_nsec / 1000);
+    
+        va_list args1;
+        va_start(args1, fmt);
+        va_list args2;
+        va_copy(args2, args1);
+        char buf[1+vsnprintf(NULL, 0, fmt, args1)];
+        va_end(args1);
+        vsnprintf(buf, sizeof buf, fmt, args2);
+        va_end(args2);
+    
+        printf("%s [debug]: %s\n", time_buf, buf);
+    }
+    
+    int main(void)
+    {
+        debug_log("Logging, %d, %d, %d", 1, 2, 3);
+    }
+    ```
+
+  - and try writing your own variadic `f()​`, maybe for error messages
+  - reviewed otp​'s current behavior, which was...confusing 😎...given the hacked command line and default values in the code
+  - further, the approach you chose - based on indices and not values - is original and *may* be better (*i.e.*, order of  symbols in *alphabet*) than the p-code we wrote:
+
+  ```C
+      ciphertext_char -= 'A';
+      char plain_char = ciphertext_char - key_char; //
+    
+      if (plain_char < 0) {
+          plain_char += alpha_length;
+      }
+    
+      return plain_char % alpha_length;
+  ```
+
+  - reviewed the examples in the PDF using a *row* (*e.g.*, `encode()` & *column* (*e.g.*, `encode_char()`) approach
+
+### next - 3/15
+
+- prove, through explanation and UTs, that your index-based method is better than above - as I contend above is simpler
+- let's discuss standard handles and command line redirection again, as **I think** it's simpler than **you think** 😎
+
 ## 3/1
 
 - discussed the concept of *parameterization* and how it is **exteremely** important to *reusability*, *testability*, *etc.*
