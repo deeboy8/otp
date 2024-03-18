@@ -11,8 +11,8 @@
             "program": "${workspaceFolder}/otp",
             "args": [
                 "-a",
-                "encode",
-                "SAT"
+                "decode",
+                "MONDAY MISERY"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -20,16 +20,16 @@
             "externalConsole": false,
             "MIMode": "lldb"
         },
-        {
-            "name": "Dave's Launch Program",
-            "type": "gdb",
-            "request": "launch",
-            "target": "${workspaceFolder}/otp",
-            // "arguments": "-a encode SAT",
-            "arguments": "-a decode ciphertext.txt hello",
-            "stopAtEntry": true,
-            "cwd": "${workspaceRoot}",
-            "valuesFormatting": "parseText"
-        },
+        // {
+        //     "name": "Dave's Launch Program",
+        //     "type": "gdb",
+        //     "request": "launch",
+        //     "target": "${workspaceFolder}/otp",
+        //     // "arguments": "-a encode SAT",
+        //     "arguments": "-a decode ciphertext.txt hello",
+        //     "stopAtEntry": true,
+        //     "cwd": "${workspaceRoot}",
+        //     "valuesFormatting": "parseText"
+        // },
     ]
 }

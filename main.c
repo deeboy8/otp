@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
         // char key_ptr[key_len + 1];
         char key_ptr[key_len];
         memset(key_ptr, '\0', key_len);
-        key_chars = fread(key_ptr, sizeof(char), key_len - 1, fd);
+        key_chars = fread(key_ptr, sizeof(char), key_len - 1, fd); //-1 add because of new line char 
         assert(key_chars != 0);
         if (IS_STR_EQUAL("encode", app_name)) {
             ciphertext = encode(key_ptr, plaintext_ptr, ALPHABET, ALPHA_LEN);
@@ -190,10 +190,10 @@ int main(int argc, char *argv[]) {
         else if (IS_STR_EQUAL("decode", app_name)) {
             FILE* fd_cipher = fopen("ciphertext.txt", "r");
             FILE* fd_key = fopen("key.txt", "r");
-            int key_len = get_file_length("key.txt")+1; //len = 9
+            int key_len = get_file_length("key.txt") + 1; //len = 9
             char key_ptr_2[key_len];
             memset(key_ptr_2, '\0', key_len);
-            int ciphertext_len = get_file_length("ciphertext.txt")+1; //len = 8
+            int ciphertext_len = get_file_length("ciphertext.txt") + 1; //len = 8
             char cipher_ptr[ciphertext_len];
             memset(cipher_ptr, '\0', ciphertext_len);
             key_chars = fread(key_ptr_2, sizeof(char), key_len, fd_key);
