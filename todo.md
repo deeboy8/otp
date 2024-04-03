@@ -1,5 +1,19 @@
 # lesson summaries
 
+## 3/30
+
+- fixed **debug** build for `my_bsq` - added `-g` flag for debug info
+- added `bsq.txt` to `launch.json` as command line argument
+- fixed **debug** configuration by changing the value of the `cwd` to match that of the executable
+- discussed `Python` education approach and status, and divided it into two buckets: **academic** (Leet code and the like) and **practical** (`otp` and the like…a shell…maybe networking…)
+
+  > consider the *purpose/value* of everything you’re doing and make sure you have a good balance between what’s needed for an *interview* vs. what’s needed for a *job/career*
+
+### next - 3/30
+
+- determine how to perform the equivalent of `C`'s `getopt()` in `Python` as well as the minimal file I/O required for `otp`
+- setup new `repo` and add initial files, *e.g.*, `todo.md` (or the relevant subset), `VS Code` files, `.py` files, *etc.*
+
 ## 3/15
 
 - over the past two Lessons, we:
